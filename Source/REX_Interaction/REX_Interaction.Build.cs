@@ -7,9 +7,6 @@ public class REX_Interaction : ModuleRules
 	public REX_Interaction(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-
-		// Distributed as precompiled binaries — link the prebuilt libs, never compile from source.
-		bUsePrecompiled = true;
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
