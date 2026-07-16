@@ -205,6 +205,11 @@ public:
     virtual void OnConstruction(const FTransform& Transform) override;
 
 protected:
+    // Self-heal for game worlds: PIE duplicates the editor world without re-running
+    // OnConstruction, so the Transient state (HISMs/POIInstances) can arrive empty.
+    // Rebuilds from BakedEntries before any BP BeginPlay logic (color/click) runs.
+    virtual void BeginPlay() override;
+
     // ---- Serialized state (saved with the map) ----
 
     UPROPERTY()
