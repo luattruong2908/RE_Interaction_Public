@@ -6,6 +6,10 @@ public class REX_Interaction : ModuleRules
 {
 	public REX_Interaction(ReadOnlyTargetRules Target) : base(Target)
 	{
+		// Distributed as a precompiled (closed-source) plugin: link the shipped
+		// binaries/objs instead of compiling from source (Private/ is not shipped).
+		bUsePrecompiled = true;
+
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		PublicIncludePaths.AddRange(
