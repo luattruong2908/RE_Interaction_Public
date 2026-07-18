@@ -1,0 +1,5 @@
+# Debug symbols: heavy (>50MB) and expose function names/line info for
+# reverse engineering. Consumers of the precompiled plugin never need them.
+# NOTE: do NOT ignore Binaries/ or Intermediate/ here — this distribution
+# repo must ship the DLL, .lib, .obj and .precompiled manifests.
+*.pdb
