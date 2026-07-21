@@ -51,7 +51,7 @@ struct FPOIHitResult;
 // ********** End ScriptStruct FPOIHitResult *******************************************************
 
 // ********** Begin ScriptStruct FPOIRuntimeInstance ***********************************************
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_91_GENERATED_BODY \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_95_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics; \
 	REX_INTERACTION_API static class UScriptStruct* StaticStruct();
 
@@ -60,7 +60,7 @@ struct FPOIRuntimeInstance;
 // ********** End ScriptStruct FPOIRuntimeInstance *************************************************
 
 // ********** Begin Class APOIManager **************************************************************
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_127_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_135_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execSelectPOIByTrace); \
 	DECLARE_FUNCTION(execGetPOICameraData); \
 	DECLARE_FUNCTION(execResolveClick); \
@@ -79,7 +79,7 @@ struct FPOIRuntimeInstance;
 
 REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManager_NoRegister();
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_127_INCLASS_NO_PURE_DECLS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_135_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAPOIManager(); \
 	friend struct Z_Construct_UClass_APOIManager_Statics; \
@@ -90,7 +90,7 @@ public: \
 	DECLARE_SERIALIZER(APOIManager)
 
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_127_ENHANCED_CONSTRUCTORS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_135_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	APOIManager(APOIManager&&) = delete; \
 	APOIManager(const APOIManager&) = delete; \
@@ -100,13 +100,13 @@ public: \
 	NO_API virtual ~APOIManager();
 
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_124_PROLOG
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_127_GENERATED_BODY \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_132_PROLOG
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_135_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_127_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_127_INCLASS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_127_ENHANCED_CONSTRUCTORS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_135_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_135_INCLASS_NO_PURE_DECLS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_135_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -116,13 +116,13 @@ class APOIManager;
 // ********** End Class APOIManager ****************************************************************
 
 // ********** Begin Class APOIManagerRoom **********************************************************
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_340_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_348_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execSpawnTestPOIs);
 
 
 REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerRoom_NoRegister();
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_340_INCLASS_NO_PURE_DECLS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_348_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAPOIManagerRoom(); \
 	friend struct Z_Construct_UClass_APOIManagerRoom_Statics; \
@@ -133,7 +133,7 @@ public: \
 	DECLARE_SERIALIZER(APOIManagerRoom)
 
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_340_ENHANCED_CONSTRUCTORS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_348_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	APOIManagerRoom(APOIManagerRoom&&) = delete; \
 	APOIManagerRoom(const APOIManagerRoom&) = delete; \
@@ -143,13 +143,13 @@ public: \
 	NO_API virtual ~APOIManagerRoom();
 
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_337_PROLOG
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_340_GENERATED_BODY \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_345_PROLOG
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_348_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_340_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_340_INCLASS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_340_ENHANCED_CONSTRUCTORS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_348_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_348_INCLASS_NO_PURE_DECLS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_348_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -159,13 +159,13 @@ class APOIManagerRoom;
 // ********** End Class APOIManagerRoom ************************************************************
 
 // ********** Begin Class APOIManagerHouse *********************************************************
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_362_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_370_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execSpawnTestPOIs);
 
 
 REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerHouse_NoRegister();
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_362_INCLASS_NO_PURE_DECLS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_370_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAPOIManagerHouse(); \
 	friend struct Z_Construct_UClass_APOIManagerHouse_Statics; \
@@ -176,7 +176,7 @@ public: \
 	DECLARE_SERIALIZER(APOIManagerHouse)
 
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_362_ENHANCED_CONSTRUCTORS \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_370_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	APOIManagerHouse(APOIManagerHouse&&) = delete; \
 	APOIManagerHouse(const APOIManagerHouse&) = delete; \
@@ -186,13 +186,13 @@ public: \
 	NO_API virtual ~APOIManagerHouse();
 
 
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_359_PROLOG
-#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_362_GENERATED_BODY \
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_367_PROLOG
+#define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_370_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_362_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_362_INCLASS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_362_ENHANCED_CONSTRUCTORS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_370_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_370_INCLASS_NO_PURE_DECLS \
+	FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_370_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

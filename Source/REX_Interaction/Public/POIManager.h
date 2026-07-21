@@ -81,6 +81,10 @@ struct FPOIHitResult
 
     UPROPERTY(BlueprintReadOnly, Category = "POI")
     float CameraArmLength = 800.f;
+
+    // World location of the hit POI's display marker (zero on a missed trace).
+    UPROPERTY(BlueprintReadOnly, Category = "POI")
+    FVector POILocation = FVector::ZeroVector;
 };
 
 // Runtime data of one POI, indexed by cube instance index.
@@ -104,6 +108,10 @@ struct FPOIRuntimeInstance
     // Cached show/hide state, used to skip hidden POIs on click.
     UPROPERTY()
     bool bVisible = true;
+
+    // Display marker world location (copied from the baked transform at rebuild time).
+    UPROPERTY()
+    FVector Location = FVector::ZeroVector;
 
     // Camera spring arm data (copied from BakedEntries at rebuild time).
     UPROPERTY()

@@ -299,10 +299,17 @@ struct Z_Construct_UScriptStruct_FPOIHitResult_Statics
 		{ "Category", "POI" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POILocation_MetaData[] = {
+		{ "Category", "POI" },
+		{ "Comment", "// World location of the hit POI's display marker (zero on a missed trace).\n" },
+		{ "ModuleRelativePath", "Public/POIManager.h" },
+		{ "ToolTip", "World location of the hit POI's display marker (zero on a missed trace)." },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraYaw;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraPitch;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraArmLength;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_POILocation;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static void* NewStructOps()
 	{
@@ -313,10 +320,12 @@ struct Z_Construct_UScriptStruct_FPOIHitResult_Statics
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_CameraYaw = { "CameraYaw", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIHitResult, CameraYaw), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraYaw_MetaData), NewProp_CameraYaw_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_CameraPitch = { "CameraPitch", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIHitResult, CameraPitch), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraPitch_MetaData), NewProp_CameraPitch_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_CameraArmLength = { "CameraArmLength", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIHitResult, CameraArmLength), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraArmLength_MetaData), NewProp_CameraArmLength_MetaData) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_POILocation = { "POILocation", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIHitResult, POILocation), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POILocation_MetaData), NewProp_POILocation_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FPOIHitResult_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_CameraYaw,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_CameraPitch,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_CameraArmLength,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewProp_POILocation,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FPOIHitResult_Statics::PropPointers) < 2048);
 const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FPOIHitResult_Statics::StructParams = {
@@ -378,6 +387,11 @@ struct Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 		{ "ToolTip", "Cached show/hide state, used to skip hidden POIs on click." },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Location_MetaData[] = {
+		{ "Comment", "// Display marker world location (copied from the baked transform at rebuild time).\n" },
+		{ "ModuleRelativePath", "Public/POIManager.h" },
+		{ "ToolTip", "Display marker world location (copied from the baked transform at rebuild time)." },
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CameraYaw_MetaData[] = {
 		{ "Comment", "// Camera spring arm data (copied from BakedEntries at rebuild time).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
@@ -395,6 +409,7 @@ struct Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics
 	static const UECodeGen_Private::FIntPropertyParams NewProp_PlaneInstanceIndex;
 	static void NewProp_bVisible_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_bVisible;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_Location;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraYaw;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraPitch;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraArmLength;
@@ -413,6 +428,7 @@ void Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_bVisible_Set
 	((FPOIRuntimeInstance*)Obj)->bVisible = 1;
 }
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_bVisible = { "bVisible", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(FPOIRuntimeInstance), &Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_bVisible_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bVisible_MetaData), NewProp_bVisible_MetaData) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_Location = { "Location", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, Location), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Location_MetaData), NewProp_Location_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_CameraYaw = { "CameraYaw", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, CameraYaw), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraYaw_MetaData), NewProp_CameraYaw_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_CameraPitch = { "CameraPitch", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, CameraPitch), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraPitch_MetaData), NewProp_CameraPitch_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_CameraArmLength = { "CameraArmLength", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, CameraArmLength), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraArmLength_MetaData), NewProp_CameraArmLength_MetaData) };
@@ -421,6 +437,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FP
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_PlaneHISMIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_PlaneInstanceIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_bVisible,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_Location,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_CameraYaw,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_CameraPitch,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewProp_CameraArmLength,
@@ -930,7 +947,7 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_APOIManager
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::NewProp_Start = { "Start", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, Start), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Start_MetaData), NewProp_Start_MetaData) };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::NewProp_End = { "End", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, End), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_End_MetaData), NewProp_End_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::NewProp_OutPOI_ID = { "OutPOI_ID", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, OutPOI_ID), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::NewProp_OutCameraSpecs = { "OutCameraSpecs", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, OutCameraSpecs), Z_Construct_UScriptStruct_FPOIHitResult, METADATA_PARAMS(0, nullptr) }; // 933247992
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::NewProp_OutCameraSpecs = { "OutCameraSpecs", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, OutCameraSpecs), Z_Construct_UScriptStruct_FPOIHitResult, METADATA_PARAMS(0, nullptr) }; // 2788837500
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, ReturnValue), Z_Construct_UClass_APOIManager_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_APOIManager_SelectPOIByTrace_Statics::NewProp_WorldContextObject,
@@ -1381,7 +1398,7 @@ struct Z_Construct_UClass_APOIManager_Statics
 		{ &Z_Construct_UFunction_APOIManager_GetPOICameraData, "GetPOICameraData" }, // 1743225184
 		{ &Z_Construct_UFunction_APOIManager_HiddenAll, "HiddenAll" }, // 1586704880
 		{ &Z_Construct_UFunction_APOIManager_ResolveClick, "ResolveClick" }, // 2093951430
-		{ &Z_Construct_UFunction_APOIManager_SelectPOIByTrace, "SelectPOIByTrace" }, // 610338805
+		{ &Z_Construct_UFunction_APOIManager_SelectPOIByTrace, "SelectPOIByTrace" }, // 2088592928
 		{ &Z_Construct_UFunction_APOIManager_SetPOIColor, "SetPOIColor" }, // 3121308829
 		{ &Z_Construct_UFunction_APOIManager_SetSelectedPOI, "SetSelectedPOI" }, // 927463309
 		{ &Z_Construct_UFunction_APOIManager_ShowAll, "ShowAll" }, // 912448625
@@ -1417,8 +1434,8 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_APOIManager_St
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_PlaneHISMs = { "PlaneHISMs", nullptr, (EPropertyFlags)0x0124088000002008, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, PlaneHISMs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneHISMs_MetaData), NewProp_PlaneHISMs_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_PlaneMeshKeys_Inner = { "PlaneMeshKeys", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_PlaneMeshKeys = { "PlaneMeshKeys", nullptr, (EPropertyFlags)0x0124080000002000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, PlaneMeshKeys), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneMeshKeys_MetaData), NewProp_PlaneMeshKeys_MetaData) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_POIInstances_Inner = { "POIInstances", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FPOIRuntimeInstance, METADATA_PARAMS(0, nullptr) }; // 4143994457
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_POIInstances = { "POIInstances", nullptr, (EPropertyFlags)0x0020080000002000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POIInstances), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POIInstances_MetaData), NewProp_POIInstances_MetaData) }; // 4143994457
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_POIInstances_Inner = { "POIInstances", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FPOIRuntimeInstance, METADATA_PARAMS(0, nullptr) }; // 1333720892
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_POIInstances = { "POIInstances", nullptr, (EPropertyFlags)0x0020080000002000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POIInstances), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POIInstances_MetaData), NewProp_POIInstances_MetaData) }; // 1333720892
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_APOIManager_Statics::NewProp_SelectedPOI_ID = { "SelectedPOI_ID", nullptr, (EPropertyFlags)0x0020080000002000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, SelectedPOI_ID), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedPOI_ID_MetaData), NewProp_SelectedPOI_ID_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_APOIManager_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_APOIManager_Statics::NewProp_SceneRoot,
@@ -1771,16 +1788,16 @@ struct Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
 		{ FPOIBakeEntry::StaticStruct, Z_Construct_UScriptStruct_FPOIBakeEntry_Statics::NewStructOps, TEXT("POIBakeEntry"), &Z_Registration_Info_UScriptStruct_FPOIBakeEntry, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIBakeEntry), 1252695288U) },
 		{ FPlaneMaterialSet::StaticStruct, Z_Construct_UScriptStruct_FPlaneMaterialSet_Statics::NewStructOps, TEXT("PlaneMaterialSet"), &Z_Registration_Info_UScriptStruct_FPlaneMaterialSet, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPlaneMaterialSet), 1406982917U) },
-		{ FPOIHitResult::StaticStruct, Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewStructOps, TEXT("POIHitResult"), &Z_Registration_Info_UScriptStruct_FPOIHitResult, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIHitResult), 933247992U) },
-		{ FPOIRuntimeInstance::StaticStruct, Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewStructOps, TEXT("POIRuntimeInstance"), &Z_Registration_Info_UScriptStruct_FPOIRuntimeInstance, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIRuntimeInstance), 4143994457U) },
+		{ FPOIHitResult::StaticStruct, Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewStructOps, TEXT("POIHitResult"), &Z_Registration_Info_UScriptStruct_FPOIHitResult, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIHitResult), 2788837500U) },
+		{ FPOIRuntimeInstance::StaticStruct, Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewStructOps, TEXT("POIRuntimeInstance"), &Z_Registration_Info_UScriptStruct_FPOIRuntimeInstance, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIRuntimeInstance), 1333720892U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_APOIManager, APOIManager::StaticClass, TEXT("APOIManager"), &Z_Registration_Info_UClass_APOIManager, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManager), 1377406504U) },
-		{ Z_Construct_UClass_APOIManagerRoom, APOIManagerRoom::StaticClass, TEXT("APOIManagerRoom"), &Z_Registration_Info_UClass_APOIManagerRoom, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManagerRoom), 2431156866U) },
-		{ Z_Construct_UClass_APOIManagerHouse, APOIManagerHouse::StaticClass, TEXT("APOIManagerHouse"), &Z_Registration_Info_UClass_APOIManagerHouse, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManagerHouse), 505454337U) },
+		{ Z_Construct_UClass_APOIManager, APOIManager::StaticClass, TEXT("APOIManager"), &Z_Registration_Info_UClass_APOIManager, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManager), 3268482150U) },
+		{ Z_Construct_UClass_APOIManagerRoom, APOIManagerRoom::StaticClass, TEXT("APOIManagerRoom"), &Z_Registration_Info_UClass_APOIManagerRoom, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManagerRoom), 487389508U) },
+		{ Z_Construct_UClass_APOIManagerHouse, APOIManagerHouse::StaticClass, TEXT("APOIManagerHouse"), &Z_Registration_Info_UClass_APOIManagerHouse, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManagerHouse), 3244430860U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_2258064405(TEXT("/Script/REX_Interaction"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_3399013603(TEXT("/Script/REX_Interaction"),
 	Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_Statics::EnumInfo));
