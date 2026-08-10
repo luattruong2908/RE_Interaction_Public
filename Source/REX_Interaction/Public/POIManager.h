@@ -73,11 +73,9 @@ struct FPOIHitResult
 {
     GENERATED_BODY()
 
+    // Baked spring arm angle in the POI's local frame (Roll is always 0).
     UPROPERTY(BlueprintReadOnly, Category = "POI")
-    float CameraYaw = 0.f;
-
-    UPROPERTY(BlueprintReadOnly, Category = "POI")
-    float CameraPitch = -45.f;
+    FRotator CameraRotation = FRotator(-45.f, 0.f, 0.f);
 
     UPROPERTY(BlueprintReadOnly, Category = "POI")
     float CameraArmLength = 800.f;
@@ -204,7 +202,8 @@ public:
 
     // THE click entry point when multiple managers exist: one trace, scans ALL
     // managers in the world, selects the nearest visible POI and deselects everywhere
-    // else (only one POI highlighted at a time). Returns the hit manager (null =
+    // else (only one POI highlighted at a time). A click that hits nothing clears only
+    // the managers with bDeselectOnMissedClick set. Returns the hit manager (null =
     // missed click) and its POI_ID + camera data in OutCameraSpecs. Blueprint only needs
     // this single node.
     UFUNCTION(BlueprintCallable, Category = "POI", meta = (WorldContext = "WorldContextObject"))
@@ -254,6 +253,12 @@ protected:
     // ray). Do NOT use ECC_Visibility -- environment geometry blocks that channel.
     UPROPERTY(EditAnywhere, Category = "POI")
     TEnumAsByte<ECollisionChannel> POITraceChannel = ECC_GameTraceChannel1;
+
+    // Should a click that hits no POI clear this manager's selection? Off by default:
+    // clicking empty space keeps the current POI highlighted, only clicking ANOTHER
+    // POI moves the selection. Checked per manager, so each can decide on its own.
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "POI")
+    bool bDeselectOnMissedClick = false;
 
     // Custom data floats per instance. Slot layout (the material must read these):
     //   0      Visible (1/0) -> Opacity Mask         (the only hide mechanism)
