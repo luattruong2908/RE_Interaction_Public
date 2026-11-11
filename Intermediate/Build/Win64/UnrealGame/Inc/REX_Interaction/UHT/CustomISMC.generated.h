@@ -12,6 +12,7 @@
 #define REX_INTERACTION_CustomISMC_generated_h
 
 #include "UObject/ObjectMacros.h"
+#include "UObject/ReflectedTypeAccessors.h"
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
@@ -21,16 +22,15 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	DECLARE_FUNCTION(execGetInstanceCustomDataValue);
 
 
-REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomISMC_NoRegister();
+struct Z_Construct_UClass_UCustomISMC_Statics;
+REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomISMC(ETypeConstructPhase);
 
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_CustomISMC_h_12_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesUCustomISMC(); \
-	friend struct Z_Construct_UClass_UCustomISMC_Statics; \
-	static UClass* GetPrivateStaticClass(); \
-	friend REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomISMC_NoRegister(); \
+	friend struct ::Z_Construct_UClass_UCustomISMC_Statics; \
+	friend REX_INTERACTION_API UClass* ::Z_Construct_UClass_UCustomISMC(ETypeConstructPhase); \
 public: \
-	DECLARE_CLASS2(UCustomISMC, UInstancedStaticMeshComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_UCustomISMC_NoRegister) \
+	DECLARE_CLASS2(UCustomISMC, UInstancedStaticMeshComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_UCustomISMC) \
 	DECLARE_SERIALIZER(UCustomISMC)
 
 

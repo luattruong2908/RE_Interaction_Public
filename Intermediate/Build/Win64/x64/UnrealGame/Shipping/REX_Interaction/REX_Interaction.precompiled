@@ -1,0 +1,11 @@
+{
+	"OutputFiles": [
+		"Module.REX_Interaction.cpp.obj",
+		"CustomEIA.cpp.obj",
+		"CustomHISMC.cpp.obj",
+		"CustomISMC.cpp.obj",
+		"POIManager.cpp.obj",
+		"REX_Interaction.cpp.obj"
+	],
+	"ToolChainVersion": "14.51.36256"
+}

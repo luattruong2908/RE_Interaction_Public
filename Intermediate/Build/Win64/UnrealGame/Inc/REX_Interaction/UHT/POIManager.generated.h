@@ -12,11 +12,11 @@
 #define REX_INTERACTION_POIManager_generated_h
 
 #include "UObject/ObjectMacros.h"
+#include "UObject/ReflectedTypeAccessors.h"
+#include "Templates/IsUEnumClass.h"
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-
- struct FLinearColor;
 class APOIManager;
 class UObject;
 class UPrimitiveComponent;
@@ -24,36 +24,48 @@ struct FLinearColor;
 struct FPOIHitResult;
 
 // ********** Begin ScriptStruct FPOIBakeEntry *****************************************************
+struct Z_Construct_UScriptStruct_FPOIBakeEntry_Statics;
+REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPOIBakeEntry(ETypeConstructPhase);
+
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_28_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FPOIBakeEntry_Statics; \
-	REX_INTERACTION_API static class UScriptStruct* StaticStruct();
+	friend struct ::Z_Construct_UScriptStruct_FPOIBakeEntry_Statics; \
+	UE_NODEBUG static UScriptStruct* StaticStruct() { return Z_Construct_UScriptStruct_FPOIBakeEntry(ETypeConstructPhase::Inner); }
 
 
 struct FPOIBakeEntry;
 // ********** End ScriptStruct FPOIBakeEntry *******************************************************
 
 // ********** Begin ScriptStruct FPlaneMaterialSet *************************************************
+struct Z_Construct_UScriptStruct_FPlaneMaterialSet_Statics;
+REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPlaneMaterialSet(ETypeConstructPhase);
+
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_64_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FPlaneMaterialSet_Statics; \
-	REX_INTERACTION_API static class UScriptStruct* StaticStruct();
+	friend struct ::Z_Construct_UScriptStruct_FPlaneMaterialSet_Statics; \
+	UE_NODEBUG static UScriptStruct* StaticStruct() { return Z_Construct_UScriptStruct_FPlaneMaterialSet(ETypeConstructPhase::Inner); }
 
 
 struct FPlaneMaterialSet;
 // ********** End ScriptStruct FPlaneMaterialSet ***************************************************
 
 // ********** Begin ScriptStruct FPOIHitResult *****************************************************
+struct Z_Construct_UScriptStruct_FPOIHitResult_Statics;
+REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPOIHitResult(ETypeConstructPhase);
+
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_74_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FPOIHitResult_Statics; \
-	REX_INTERACTION_API static class UScriptStruct* StaticStruct();
+	friend struct ::Z_Construct_UScriptStruct_FPOIHitResult_Statics; \
+	UE_NODEBUG static UScriptStruct* StaticStruct() { return Z_Construct_UScriptStruct_FPOIHitResult(ETypeConstructPhase::Inner); }
 
 
 struct FPOIHitResult;
 // ********** End ScriptStruct FPOIHitResult *******************************************************
 
 // ********** Begin ScriptStruct FPOIRuntimeInstance ***********************************************
+struct Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics;
+REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPOIRuntimeInstance(ETypeConstructPhase);
+
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_93_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics; \
-	REX_INTERACTION_API static class UScriptStruct* StaticStruct();
+	friend struct ::Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics; \
+	UE_NODEBUG static UScriptStruct* StaticStruct() { return Z_Construct_UScriptStruct_FPOIRuntimeInstance(ETypeConstructPhase::Inner); }
 
 
 struct FPOIRuntimeInstance;
@@ -77,16 +89,15 @@ struct FPOIRuntimeInstance;
 	DECLARE_FUNCTION(execBakeFromLevel);
 
 
-REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManager_NoRegister();
+struct Z_Construct_UClass_APOIManager_Statics;
+REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManager(ETypeConstructPhase);
 
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_133_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesAPOIManager(); \
-	friend struct Z_Construct_UClass_APOIManager_Statics; \
-	static UClass* GetPrivateStaticClass(); \
-	friend REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManager_NoRegister(); \
+	friend struct ::Z_Construct_UClass_APOIManager_Statics; \
+	friend REX_INTERACTION_API UClass* ::Z_Construct_UClass_APOIManager(ETypeConstructPhase); \
 public: \
-	DECLARE_CLASS2(APOIManager, AActor, COMPILED_IN_FLAGS(CLASS_Abstract | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_APOIManager_NoRegister) \
+	DECLARE_CLASS2(APOIManager, AActor, COMPILED_IN_FLAGS(CLASS_Abstract | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_APOIManager) \
 	DECLARE_SERIALIZER(APOIManager)
 
 
@@ -120,16 +131,15 @@ class APOIManager;
 	DECLARE_FUNCTION(execSpawnTestPOIs);
 
 
-REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerRoom_NoRegister();
+struct Z_Construct_UClass_APOIManagerRoom_Statics;
+REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerRoom(ETypeConstructPhase);
 
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_353_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesAPOIManagerRoom(); \
-	friend struct Z_Construct_UClass_APOIManagerRoom_Statics; \
-	static UClass* GetPrivateStaticClass(); \
-	friend REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerRoom_NoRegister(); \
+	friend struct ::Z_Construct_UClass_APOIManagerRoom_Statics; \
+	friend REX_INTERACTION_API UClass* ::Z_Construct_UClass_APOIManagerRoom(ETypeConstructPhase); \
 public: \
-	DECLARE_CLASS2(APOIManagerRoom, APOIManager, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_APOIManagerRoom_NoRegister) \
+	DECLARE_CLASS2(APOIManagerRoom, APOIManager, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_APOIManagerRoom) \
 	DECLARE_SERIALIZER(APOIManagerRoom)
 
 
@@ -163,16 +173,15 @@ class APOIManagerRoom;
 	DECLARE_FUNCTION(execSpawnTestPOIs);
 
 
-REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerHouse_NoRegister();
+struct Z_Construct_UClass_APOIManagerHouse_Statics;
+REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerHouse(ETypeConstructPhase);
 
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h_375_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesAPOIManagerHouse(); \
-	friend struct Z_Construct_UClass_APOIManagerHouse_Statics; \
-	static UClass* GetPrivateStaticClass(); \
-	friend REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerHouse_NoRegister(); \
+	friend struct ::Z_Construct_UClass_APOIManagerHouse_Statics; \
+	friend REX_INTERACTION_API UClass* ::Z_Construct_UClass_APOIManagerHouse(ETypeConstructPhase); \
 public: \
-	DECLARE_CLASS2(APOIManagerHouse, APOIManager, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_APOIManagerHouse_NoRegister) \
+	DECLARE_CLASS2(APOIManagerHouse, APOIManager, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_APOIManagerHouse) \
 	DECLARE_SERIALIZER(APOIManagerHouse)
 
 
@@ -212,7 +221,7 @@ class APOIManagerHouse;
 
 enum class EPOIBakeScope : uint8;
 template<> struct TIsUEnumClass<EPOIBakeScope> { enum { Value = true }; };
-template<> REX_INTERACTION_API UEnum* StaticEnum<EPOIBakeScope>();
+template<> UE_NODEBUG REX_INTERACTION_NON_ATTRIBUTED_API UEnum* StaticEnum<EPOIBakeScope>();
 // ********** End Enum EPOIBakeScope ***************************************************************
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

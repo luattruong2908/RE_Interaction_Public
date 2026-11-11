@@ -12,6 +12,7 @@
 #define REX_INTERACTION_CustomHISMC_generated_h
 
 #include "UObject/ObjectMacros.h"
+#include "UObject/ReflectedTypeAccessors.h"
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
@@ -21,16 +22,15 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	DECLARE_FUNCTION(execGetInstanceCustomDataValue);
 
 
-REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomHISMC_NoRegister();
+struct Z_Construct_UClass_UCustomHISMC_Statics;
+REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomHISMC(ETypeConstructPhase);
 
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_CustomHISMC_h_12_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesUCustomHISMC(); \
-	friend struct Z_Construct_UClass_UCustomHISMC_Statics; \
-	static UClass* GetPrivateStaticClass(); \
-	friend REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomHISMC_NoRegister(); \
+	friend struct ::Z_Construct_UClass_UCustomHISMC_Statics; \
+	friend REX_INTERACTION_API UClass* ::Z_Construct_UClass_UCustomHISMC(ETypeConstructPhase); \
 public: \
-	DECLARE_CLASS2(UCustomHISMC, UHierarchicalInstancedStaticMeshComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_UCustomHISMC_NoRegister) \
+	DECLARE_CLASS2(UCustomHISMC, UHierarchicalInstancedStaticMeshComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_UCustomHISMC) \
 	DECLARE_SERIALIZER(UCustomHISMC)
 
 

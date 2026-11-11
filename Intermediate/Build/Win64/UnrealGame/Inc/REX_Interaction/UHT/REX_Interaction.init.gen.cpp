@@ -7,23 +7,24 @@
 #include "UObject/GeneratedCppIncludes.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeREX_Interaction_init() {}
+static_assert(!UE_WITH_CONSTINIT_UOBJECT, "This generated code can only be compiled with !UE_WITH_CONSTINIT_OBJECT");
 	static FPackageRegistrationInfo Z_Registration_Info_UPackage__Script_REX_Interaction;
-	FORCENOINLINE UPackage* Z_Construct_UPackage__Script_REX_Interaction()
+	FORCENOINLINE UPackage* Z_Construct_UPackage__Script_REX_Interaction(ETypeConstructPhase)
 	{
 		if (!Z_Registration_Info_UPackage__Script_REX_Interaction.OuterSingleton)
 		{
-			static const UECodeGen_Private::FPackageParams PackageParams = {
-				"/Script/REX_Interaction",
-				nullptr,
-				0,
-				PKG_CompiledIn | 0x00000000,
-				0xB662696D,
-				0x11E30462,
-				METADATA_PARAMS(0, nullptr)
-			};
-			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_REX_Interaction.OuterSingleton, PackageParams);
-		}
-		return Z_Registration_Info_UPackage__Script_REX_Interaction.OuterSingleton;
+		static const UECodeGen_Private::FPackageParams PackageParams = {
+			"/Script/REX_Interaction",
+			nullptr,
+			0,
+			PKG_CompiledIn | 0x00000000,
+			0x3EDF3969,
+			0x1353D3CA,
+			METADATA_PARAMS(0, nullptr)
+		};
+		UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_REX_Interaction.OuterSingleton, PackageParams);
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_REX_Interaction(Z_Construct_UPackage__Script_REX_Interaction, TEXT("/Script/REX_Interaction"), Z_Registration_Info_UPackage__Script_REX_Interaction, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xB662696D, 0x11E30462));
+	return Z_Registration_Info_UPackage__Script_REX_Interaction.OuterSingleton;
+}
+static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_REX_Interaction(Z_Construct_UPackage__Script_REX_Interaction, TEXT("/Script/REX_Interaction"), Z_Registration_Info_UPackage__Script_REX_Interaction, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x3EDF3969, 0x1353D3CA));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

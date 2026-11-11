@@ -12,21 +12,21 @@
 #define REX_INTERACTION_CustomEIA_generated_h
 
 #include "UObject/ObjectMacros.h"
+#include "UObject/ReflectedTypeAccessors.h"
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Class UCustomEIA ***************************************************************
-REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomEIA_NoRegister();
+struct Z_Construct_UClass_UCustomEIA_Statics;
+REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomEIA(ETypeConstructPhase);
 
 #define FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_CustomEIA_h_14_INCLASS_NO_PURE_DECLS \
 private: \
-	static void StaticRegisterNativesUCustomEIA(); \
-	friend struct Z_Construct_UClass_UCustomEIA_Statics; \
-	static UClass* GetPrivateStaticClass(); \
-	friend REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomEIA_NoRegister(); \
+	friend struct ::Z_Construct_UClass_UCustomEIA_Statics; \
+	friend REX_INTERACTION_API UClass* ::Z_Construct_UClass_UCustomEIA(ETypeConstructPhase); \
 public: \
-	DECLARE_CLASS2(UCustomEIA, UEnhancedPlayerInput, COMPILED_IN_FLAGS(0 | CLASS_Transient | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_UCustomEIA_NoRegister) \
+	DECLARE_CLASS2(UCustomEIA, UEnhancedPlayerInput, COMPILED_IN_FLAGS(0 | CLASS_Transient | CLASS_Config), CASTCLASS_None, TEXT("/Script/REX_Interaction"), Z_Construct_UClass_UCustomEIA) \
 	DECLARE_SERIALIZER(UCustomEIA)
 
 
