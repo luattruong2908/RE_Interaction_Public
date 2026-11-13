@@ -29,84 +29,15 @@ ENGINE_API UClass* Z_Construct_UClass_UStaticMesh(ETypeConstructPhase);
 
 // ********** Begin Same Module References *********************************************************
 UPackage* Z_Construct_UPackage__Script_REX_Interaction(ETypeConstructPhase);
-REX_INTERACTION_API UEnum* Z_Construct_UEnum_REX_Interaction_EPOIBakeScope(ETypeConstructPhase);
 REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPOIBakeEntry(ETypeConstructPhase);
 REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPOIHitResult(ETypeConstructPhase);
 REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManager(ETypeConstructPhase);
-REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerHouse(ETypeConstructPhase);
-REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerRoom(ETypeConstructPhase);
+REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPOIMaterialSet(ETypeConstructPhase);
 REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPOIRuntimeInstance(ETypeConstructPhase);
-REX_INTERACTION_API UScriptStruct* Z_Construct_UScriptStruct_FPlaneMaterialSet(ETypeConstructPhase);
 REX_INTERACTION_API UClass* Z_Construct_UClass_UCustomHISMC(ETypeConstructPhase);
 REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManager(ETypeConstructPhase);
-REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerHouse(ETypeConstructPhase);
-REX_INTERACTION_API UClass* Z_Construct_UClass_APOIManagerRoom(ETypeConstructPhase);
 // ********** End Same Module References ***********************************************************
 #define UHT_STRUCT_BASE(INIT) UE::CodeGen::ConstInit::TCompiledInObjectPtr<const FStructBaseChain>(UE::Private::AsStructBaseChain(INIT))
-
-// ********** Begin Enum EPOIBakeScope *************************************************************
-#ifdef UHT_STATICS
-#error UHT_STATICS already defined
-#endif
-#define UHT_STATICS Z_Construct_UEnum_REX_Interaction_EPOIBakeScope_Statics
-template<> REX_INTERACTION_NON_ATTRIBUTED_API UEnum* StaticEnum<EPOIBakeScope>()
-{
-	return Z_Construct_UEnum_REX_Interaction_EPOIBakeScope(ETypeConstructPhase::Outer);
-}
-struct UHT_STATICS
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "Comment", "// Which POI kind a manager bakes/deletes. Lets two managers coexist in one level\n// (one PlaneOnly for rooms, one HouseOnly for houses) without touching each other's actors.\n" },
-		{ "HouseOnly.DisplayName", "House Only" },
-		{ "HouseOnly.Name", "EPOIBakeScope::HouseOnly" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "PlaneAndHouse.DisplayName", "Plane + House" },
-		{ "PlaneAndHouse.Name", "EPOIBakeScope::PlaneAndHouse" },
-		{ "PlaneOnly.DisplayName", "Plane Only" },
-		{ "PlaneOnly.Name", "EPOIBakeScope::PlaneOnly" },
-		{ "ToolTip", "Which POI kind a manager bakes/deletes. Lets two managers coexist in one level\n(one PlaneOnly for rooms, one HouseOnly for houses) without touching each other's actors." },
-	};
-#endif // WITH_METADATA
-	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
-		{ "EPOIBakeScope::PlaneAndHouse", (int64)EPOIBakeScope::PlaneAndHouse },
-		{ "EPOIBakeScope::PlaneOnly", (int64)EPOIBakeScope::PlaneOnly },
-		{ "EPOIBakeScope::HouseOnly", (int64)EPOIBakeScope::HouseOnly },
-	};
-	static const UECodeGen_Private::FEnumParams EnumParams;
-}; // struct UHT_STATICS 
-const UECodeGen_Private::FEnumParams UHT_STATICS::EnumParams = {
-	(FTypeConstructFunc*)Z_Construct_UPackage__Script_REX_Interaction,
-	nullptr,
-	"EPOIBakeScope",
-	"EPOIBakeScope",
-	UHT_STATICS::Enumerators,
-	RF_Public|RF_Transient|RF_MarkAsNative,
-	UE_ARRAY_COUNT(UHT_STATICS::Enumerators),
-	EEnumFlags::None,
-	(uint8)UEnum::ECppForm::EnumClass,
-	(uint8)UEnum::EUnderlyingType::uint8,
-	METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)
-};
-static FEnumRegistrationInfo ZRIE_EPOIBakeScope;
-UEnum* Z_Construct_UEnum_REX_Interaction_EPOIBakeScope(ETypeConstructPhase Phase)
-{
-	if (Phase == ETypeConstructPhase::Outer)
-	{
-		if (!ZRIE_EPOIBakeScope.OuterSingleton)
-		{
-			ZRIE_EPOIBakeScope.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_REX_Interaction_EPOIBakeScope, (UObject*)Z_Construct_UPackage__Script_REX_Interaction(ETypeConstructPhase::Outer), TEXT("EPOIBakeScope"));
-		}
-		return ZRIE_EPOIBakeScope.OuterSingleton;
-	}
-	if (!ZRIE_EPOIBakeScope.InnerSingleton)
-	{
-		UECodeGen_Private::ConstructUEnum(ZRIE_EPOIBakeScope.InnerSingleton, UHT_STATICS::EnumParams);
-	}
-	return ZRIE_EPOIBakeScope.InnerSingleton;
-}
-#undef UHT_STATICS
-// ********** End Enum EPOIBakeScope ***************************************************************
 
 // ********** Begin ScriptStruct FPOIBakeEntry *****************************************************
 #ifdef UHT_STATICS
@@ -119,9 +50,9 @@ struct UHT_STATICS
 	static inline consteval int16 GetStructAlignment() { return alignof(FPOIBakeEntry); }
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "Comment", "// One baked POI. BakedEntries is the serialized source of truth; the HISMs are\n// Transient and rebuilt from it on every load (see RebuildHISMs).\n// Do NOT rename fields -- that breaks data already baked into maps.\n" },
+		{ "Comment", "// One baked POI. BakedEntries is the serialized source of truth; the HISMs are\n// Transient and rebuilt from it on every load (see RebuildHISMs).\n// Do NOT rename fields without a property redirect in\n// Config/DefaultREX_Interaction.ini -- that breaks data already baked into maps.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "One baked POI. BakedEntries is the serialized source of truth; the HISMs are\nTransient and rebuilt from it on every load (see RebuildHISMs).\nDo NOT rename fields -- that breaks data already baked into maps." },
+		{ "ToolTip", "One baked POI. BakedEntries is the serialized source of truth; the HISMs are\nTransient and rebuilt from it on every load (see RebuildHISMs).\nDo NOT rename fields without a property redirect in\nConfig/DefaultREX_Interaction.ini -- that breaks data already baked into maps." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POI_ID_MetaData[] = {
 		{ "Category", "POI" },
@@ -129,23 +60,17 @@ struct UHT_STATICS
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 		{ "ToolTip", "Key into the POI DataTable (read from the source actor via reflection)." },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlaneMesh_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Mesh_MetaData[] = {
 		{ "Category", "POI" },
-		{ "Comment", "// Display mesh: the Plane of BP_POI_Room, or the Cube itself for BP_POI_House.\n// Also the grouping key -- one display HISM per distinct mesh.\n" },
+		{ "Comment", "// The source POI's Cube mesh: display and click volume in one.\n// Also the grouping key -- one HISM per distinct mesh.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Display mesh: the Plane of BP_POI_Room, or the Cube itself for BP_POI_House.\nAlso the grouping key -- one display HISM per distinct mesh." },
+		{ "ToolTip", "The source POI's Cube mesh: display and click volume in one.\nAlso the grouping key -- one HISM per distinct mesh." },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlaneTransform_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Transform_MetaData[] = {
 		{ "Category", "POI" },
-		{ "Comment", "// World transform of the display mesh.\n" },
+		{ "Comment", "// World transform of the Cube.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "World transform of the display mesh." },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CubeTransform_MetaData[] = {
-		{ "Category", "POI" },
-		{ "Comment", "// World transform of the click volume.\n" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "World transform of the click volume." },
+		{ "ToolTip", "World transform of the Cube." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CameraYaw_MetaData[] = {
 		{ "Category", "POI" },
@@ -165,9 +90,8 @@ struct UHT_STATICS
 
 // ********** Begin ScriptStruct FPOIBakeEntry constinit property declarations *********************
 	static const UECodeGen_Private::FStrPropertyParams NewProp_POI_ID;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_PlaneMesh;
-	static const UECodeGen_Private::FStructPropertyParams NewProp_PlaneTransform;
-	static const UECodeGen_Private::FStructPropertyParams NewProp_CubeTransform;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Mesh;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_Transform;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraYaw;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraPitch;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_CameraArmLength;
@@ -182,17 +106,15 @@ struct UHT_STATICS
 
 // ********** Begin ScriptStruct FPOIBakeEntry Property Definitions ********************************
 const UECodeGen_Private::FStrPropertyParams UHT_STATICS::NewProp_POI_ID = { "POI_ID", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Str, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, POI_ID), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POI_ID_MetaData), NewProp_POI_ID_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_PlaneMesh = { "PlaneMesh", nullptr, (EPropertyFlags)0x0114000000020001, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, PlaneMesh), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneMesh_MetaData), NewProp_PlaneMesh_MetaData) };
-const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_PlaneTransform = { "PlaneTransform", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, PlaneTransform), Z_Construct_UScriptStruct_FTransform, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneTransform_MetaData), NewProp_PlaneTransform_MetaData) };
-const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_CubeTransform = { "CubeTransform", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, CubeTransform), Z_Construct_UScriptStruct_FTransform, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CubeTransform_MetaData), NewProp_CubeTransform_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Mesh = { "Mesh", nullptr, (EPropertyFlags)0x0114000000020001, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, Mesh), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Mesh_MetaData), NewProp_Mesh_MetaData) };
+const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_Transform = { "Transform", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, Transform), Z_Construct_UScriptStruct_FTransform, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Transform_MetaData), NewProp_Transform_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams UHT_STATICS::NewProp_CameraYaw = { "CameraYaw", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Float, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, CameraYaw), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraYaw_MetaData), NewProp_CameraYaw_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams UHT_STATICS::NewProp_CameraPitch = { "CameraPitch", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Float, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, CameraPitch), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraPitch_MetaData), NewProp_CameraPitch_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams UHT_STATICS::NewProp_CameraArmLength = { "CameraArmLength", nullptr, (EPropertyFlags)0x0010000000020001, UECodeGen_Private::EPropertyGenFlags::Float, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIBakeEntry, CameraArmLength), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraArmLength_MetaData), NewProp_CameraArmLength_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POI_ID,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneMesh,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneTransform,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_CubeTransform,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_Mesh,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_Transform,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_CameraYaw,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_CameraPitch,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_CameraArmLength,
@@ -232,79 +154,79 @@ UScriptStruct* Z_Construct_UScriptStruct_FPOIBakeEntry(ETypeConstructPhase Phase
 #undef UHT_STATICS
 // ********** End ScriptStruct FPOIBakeEntry *******************************************************
 
-// ********** Begin ScriptStruct FPlaneMaterialSet *************************************************
+// ********** Begin ScriptStruct FPOIMaterialSet ***************************************************
 #ifdef UHT_STATICS
 #error UHT_STATICS already defined
 #endif
-#define UHT_STATICS Z_Construct_UScriptStruct_FPlaneMaterialSet_Statics
+#define UHT_STATICS Z_Construct_UScriptStruct_FPOIMaterialSet_Statics
 struct UHT_STATICS
 {
-	static inline consteval int32 GetStructSize() { return DataSizeOf<FPlaneMaterialSet>(); }
-	static inline consteval int16 GetStructAlignment() { return alignof(FPlaneMaterialSet); }
+	static inline consteval int32 GetStructSize() { return DataSizeOf<FPOIMaterialSet>(); }
+	static inline consteval int16 GetStructAlignment() { return alignof(FPOIMaterialSet); }
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "Comment", "// Per-slot materials of one plane mesh kind, captured at bake time. Only true\n// overrides are stored; null = inherit the mesh's own material.\n" },
+		{ "Comment", "// Per-slot materials of one mesh kind, captured at bake time. Only true\n// overrides are stored; null = inherit the mesh's own material.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Per-slot materials of one plane mesh kind, captured at bake time. Only true\noverrides are stored; null = inherit the mesh's own material." },
+		{ "ToolTip", "Per-slot materials of one mesh kind, captured at bake time. Only true\noverrides are stored; null = inherit the mesh's own material." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Materials_MetaData[] = {
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 	};
 #endif // WITH_METADATA
 
-// ********** Begin ScriptStruct FPlaneMaterialSet constinit property declarations *****************
+// ********** Begin ScriptStruct FPOIMaterialSet constinit property declarations *******************
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_Materials_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_Materials;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-// ********** End ScriptStruct FPlaneMaterialSet constinit property declarations *******************
+// ********** End ScriptStruct FPOIMaterialSet constinit property declarations *********************
 	static void* NewStructOps()
 	{
-		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FPlaneMaterialSet>();
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FPOIMaterialSet>();
 	}
 	static const UECodeGen_Private::FStructParams StructParams;
 }; // struct UHT_STATICS
 
-// ********** Begin ScriptStruct FPlaneMaterialSet Property Definitions ****************************
+// ********** Begin ScriptStruct FPOIMaterialSet Property Definitions ******************************
 const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Materials_Inner = { "Materials", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UMaterialInterface, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_Materials = { "Materials", nullptr, (EPropertyFlags)0x0114000000000000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(FPlaneMaterialSet, Materials), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Materials_MetaData), NewProp_Materials_MetaData) };
+const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_Materials = { "Materials", nullptr, (EPropertyFlags)0x0114000000000000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIMaterialSet, Materials), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Materials_MetaData), NewProp_Materials_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_Materials_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_Materials,
 };
 static_assert(UE_ARRAY_COUNT(UHT_STATICS::PropPointers) < 2048);
-// ********** End ScriptStruct FPlaneMaterialSet Property Definitions ******************************
+// ********** End ScriptStruct FPOIMaterialSet Property Definitions ********************************
 const UECodeGen_Private::FStructParams UHT_STATICS::StructParams = {
 	(FTypeConstructFunc*)Z_Construct_UPackage__Script_REX_Interaction,
 	nullptr,
 	&NewStructOps,
-	"PlaneMaterialSet",
+	"POIMaterialSet",
 	UHT_STATICS::PropPointers,
 	UE_ARRAY_COUNT(UHT_STATICS::PropPointers),
-	DataSizeOf<FPlaneMaterialSet>(),
-	alignof(FPlaneMaterialSet),
+	DataSizeOf<FPOIMaterialSet>(),
+	alignof(FPOIMaterialSet),
 	RF_Public|RF_Transient|RF_MarkAsNative,
 	EStructFlags(0x00000001),
 	METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)
 };
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FPlaneMaterialSet;
-UScriptStruct* Z_Construct_UScriptStruct_FPlaneMaterialSet(ETypeConstructPhase Phase)
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FPOIMaterialSet;
+UScriptStruct* Z_Construct_UScriptStruct_FPOIMaterialSet(ETypeConstructPhase Phase)
 {
 	if (Phase == ETypeConstructPhase::Outer)
 	{
-		if (!Z_Registration_Info_UScriptStruct_FPlaneMaterialSet.OuterSingleton)
+		if (!Z_Registration_Info_UScriptStruct_FPOIMaterialSet.OuterSingleton)
 		{
-			Z_Registration_Info_UScriptStruct_FPlaneMaterialSet.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FPlaneMaterialSet, (UObject*)Z_Construct_UPackage__Script_REX_Interaction(ETypeConstructPhase::Outer), TEXT("PlaneMaterialSet"));
+			Z_Registration_Info_UScriptStruct_FPOIMaterialSet.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FPOIMaterialSet, (UObject*)Z_Construct_UPackage__Script_REX_Interaction(ETypeConstructPhase::Outer), TEXT("POIMaterialSet"));
 		}
-		return Z_Registration_Info_UScriptStruct_FPlaneMaterialSet.OuterSingleton;
+		return Z_Registration_Info_UScriptStruct_FPOIMaterialSet.OuterSingleton;
 	}
-	if (!Z_Registration_Info_UScriptStruct_FPlaneMaterialSet.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FPOIMaterialSet.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FPlaneMaterialSet.InnerSingleton, UHT_STATICS::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FPOIMaterialSet.InnerSingleton, UHT_STATICS::StructParams);
 	}
-	return CastChecked<UScriptStruct>(Z_Registration_Info_UScriptStruct_FPlaneMaterialSet.InnerSingleton);
+	return CastChecked<UScriptStruct>(Z_Registration_Info_UScriptStruct_FPOIMaterialSet.InnerSingleton);
 }
 #undef UHT_STATICS
-// ********** End ScriptStruct FPlaneMaterialSet ***************************************************
+// ********** End ScriptStruct FPOIMaterialSet *****************************************************
 
 // ********** Begin ScriptStruct FPOIHitResult *****************************************************
 #ifdef UHT_STATICS
@@ -334,9 +256,9 @@ struct UHT_STATICS
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POILocation_MetaData[] = {
 		{ "Category", "POI" },
-		{ "Comment", "// World location of the hit POI's display marker (zero on a missed trace).\n" },
+		{ "Comment", "// World location of the hit POI (zero on a missed trace).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "World location of the hit POI's display marker (zero on a missed trace)." },
+		{ "ToolTip", "World location of the hit POI (zero on a missed trace)." },
 	};
 #endif // WITH_METADATA
 
@@ -408,22 +330,22 @@ struct UHT_STATICS
 	static inline consteval int16 GetStructAlignment() { return alignof(FPOIRuntimeInstance); }
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "Comment", "// Runtime data of one POI, indexed by cube instance index.\n// Transient -- rebuilt from BakedEntries on load.\n" },
+		{ "Comment", "// Runtime data of one POI, same order as BakedEntries.\n// Transient -- rebuilt from BakedEntries on load.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Runtime data of one POI, indexed by cube instance index.\nTransient -- rebuilt from BakedEntries on load." },
+		{ "ToolTip", "Runtime data of one POI, same order as BakedEntries.\nTransient -- rebuilt from BakedEntries on load." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POI_ID_MetaData[] = {
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlaneHISMIndex_MetaData[] = {
-		{ "Comment", "// Index into PlaneHISMs (INDEX_NONE if this POI has no display mesh).\n" },
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_HISMIndex_MetaData[] = {
+		{ "Comment", "// Index into APOIManager::HISMs (INDEX_NONE if this POI has no mesh).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Index into PlaneHISMs (INDEX_NONE if this POI has no display mesh)." },
+		{ "ToolTip", "Index into APOIManager::HISMs (INDEX_NONE if this POI has no mesh)." },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlaneInstanceIndex_MetaData[] = {
-		{ "Comment", "// Instance index inside that plane HISM.\n" },
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InstanceIndex_MetaData[] = {
+		{ "Comment", "// Instance index inside that HISM.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Instance index inside that plane HISM." },
+		{ "ToolTip", "Instance index inside that HISM." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bVisible_MetaData[] = {
 		{ "Comment", "// Cached show/hide state, used to skip hidden POIs on click.\n" },
@@ -431,9 +353,9 @@ struct UHT_STATICS
 		{ "ToolTip", "Cached show/hide state, used to skip hidden POIs on click." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Location_MetaData[] = {
-		{ "Comment", "// Display marker world location (copied from the baked transform at rebuild time).\n" },
+		{ "Comment", "// World location (copied from the baked transform at rebuild time).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Display marker world location (copied from the baked transform at rebuild time)." },
+		{ "ToolTip", "World location (copied from the baked transform at rebuild time)." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CameraYaw_MetaData[] = {
 		{ "Comment", "// Camera spring arm data (copied from BakedEntries at rebuild time).\n" },
@@ -450,8 +372,8 @@ struct UHT_STATICS
 
 // ********** Begin ScriptStruct FPOIRuntimeInstance constinit property declarations ***************
 	static const UECodeGen_Private::FStrPropertyParams NewProp_POI_ID;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_PlaneHISMIndex;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_PlaneInstanceIndex;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_HISMIndex;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_InstanceIndex;
 	static void NewProp_bVisible_SetBit(void* Obj)
 	{
 		((FPOIRuntimeInstance*)Obj)->bVisible = 1;
@@ -472,8 +394,8 @@ struct UHT_STATICS
 
 // ********** Begin ScriptStruct FPOIRuntimeInstance Property Definitions **************************
 const UECodeGen_Private::FStrPropertyParams UHT_STATICS::NewProp_POI_ID = { "POI_ID", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Str, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, POI_ID), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POI_ID_MetaData), NewProp_POI_ID_MetaData) };
-const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_PlaneHISMIndex = { "PlaneHISMIndex", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, PlaneHISMIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneHISMIndex_MetaData), NewProp_PlaneHISMIndex_MetaData) };
-const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_PlaneInstanceIndex = { "PlaneInstanceIndex", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, PlaneInstanceIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneInstanceIndex_MetaData), NewProp_PlaneInstanceIndex_MetaData) };
+const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_HISMIndex = { "HISMIndex", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, HISMIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_HISMIndex_MetaData), NewProp_HISMIndex_MetaData) };
+const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_InstanceIndex = { "InstanceIndex", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, InstanceIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InstanceIndex_MetaData), NewProp_InstanceIndex_MetaData) };
 const UECodeGen_Private::FBoolPropertyParams UHT_STATICS::NewProp_bVisible = { "bVisible", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, nullptr, nullptr, 1, sizeof(bool), sizeof(FPOIRuntimeInstance), &UHT_STATICS::NewProp_bVisible_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bVisible_MetaData), NewProp_bVisible_MetaData) };
 const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_Location = { "Location", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, Location), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Location_MetaData), NewProp_Location_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams UHT_STATICS::NewProp_CameraYaw = { "CameraYaw", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Float, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, CameraYaw), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraYaw_MetaData), NewProp_CameraYaw_MetaData) };
@@ -481,8 +403,8 @@ const UECodeGen_Private::FFloatPropertyParams UHT_STATICS::NewProp_CameraPitch =
 const UECodeGen_Private::FFloatPropertyParams UHT_STATICS::NewProp_CameraArmLength = { "CameraArmLength", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Float, nullptr, nullptr, 1, STRUCT_OFFSET(FPOIRuntimeInstance, CameraArmLength), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraArmLength_MetaData), NewProp_CameraArmLength_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POI_ID,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneHISMIndex,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneInstanceIndex,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_HISMIndex,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_InstanceIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_bVisible,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_Location,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_CameraYaw,
@@ -714,6 +636,7 @@ DEFINE_FUNCTION(APOIManager::execApplyVisibleSet)
 // ********** End Class APOIManager Function ApplyVisibleSet ***************************************
 
 // ********** Begin Class APOIManager Function BakeFromLevel ***************************************
+#if WITH_EDITOR
 #ifdef UHT_STATICS
 #error UHT_STATICS already defined
 #endif
@@ -724,9 +647,9 @@ struct UHT_STATICS
 	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
 		{ "CallInEditor", "true" },
 		{ "Category", "POI" },
-		{ "Comment", "// Scans the level for source POI actors (per BakeScope), fills BakedEntries,\n// rebuilds the HISMs. Idempotent -- re-running re-bakes from scratch.\n" },
+		{ "Comment", "// Scans the level for source POI actors, fills BakedEntries, rebuilds the\n// HISMs. Re-running re-bakes from scratch. A scan that finds no source POI keeps\n// the existing bake (the sources are usually deleted after baking).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Scans the level for source POI actors (per BakeScope), fills BakedEntries,\nrebuilds the HISMs. Idempotent -- re-running re-bakes from scratch." },
+		{ "ToolTip", "Scans the level for source POI actors, fills BakedEntries, rebuilds the\nHISMs. Re-running re-bakes from scratch. A scan that finds no source POI keeps\nthe existing bake (the sources are usually deleted after baking)." },
 	};
 #endif // WITH_METADATA
 
@@ -734,7 +657,7 @@ struct UHT_STATICS
 // ********** End Function BakeFromLevel constinit property declarations ***************************
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams UHT_STATICS::FuncParams = { { (FTypeConstructFunc*)Z_Construct_UClass_APOIManager, nullptr, "BakeFromLevel", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)},  };
+const UECodeGen_Private::FFunctionParams UHT_STATICS::FuncParams = { { (FTypeConstructFunc*)Z_Construct_UClass_APOIManager, nullptr, "BakeFromLevel", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x20020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)},  };
 UFunction* Z_Construct_UFunction_APOIManager_BakeFromLevel(ETypeConstructPhase Phase)
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -752,9 +675,11 @@ DEFINE_FUNCTION(APOIManager::execBakeFromLevel)
 	P_THIS->BakeFromLevel();
 	P_NATIVE_END;
 }
+#endif
 // ********** End Class APOIManager Function BakeFromLevel *****************************************
 
 // ********** Begin Class APOIManager Function DeleteSourcePOIs ************************************
+#if WITH_EDITOR
 #ifdef UHT_STATICS
 #error UHT_STATICS already defined
 #endif
@@ -765,9 +690,9 @@ struct UHT_STATICS
 	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
 		{ "CallInEditor", "true" },
 		{ "Category", "POI" },
-		{ "Comment", "// Destroys the source POI actors in this manager's scope. Run AFTER baking.\n// Not undoable -- if pressed by mistake, do not save the map.\n" },
+		{ "Comment", "// Destroys the source POI actors. Run AFTER baking.\n// Not undoable -- if pressed by mistake, do not save the map.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Destroys the source POI actors in this manager's scope. Run AFTER baking.\nNot undoable -- if pressed by mistake, do not save the map." },
+		{ "ToolTip", "Destroys the source POI actors. Run AFTER baking.\nNot undoable -- if pressed by mistake, do not save the map." },
 	};
 #endif // WITH_METADATA
 
@@ -775,7 +700,7 @@ struct UHT_STATICS
 // ********** End Function DeleteSourcePOIs constinit property declarations ************************
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams UHT_STATICS::FuncParams = { { (FTypeConstructFunc*)Z_Construct_UClass_APOIManager, nullptr, "DeleteSourcePOIs", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)},  };
+const UECodeGen_Private::FFunctionParams UHT_STATICS::FuncParams = { { (FTypeConstructFunc*)Z_Construct_UClass_APOIManager, nullptr, "DeleteSourcePOIs", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x20020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)},  };
 UFunction* Z_Construct_UFunction_APOIManager_DeleteSourcePOIs(ETypeConstructPhase Phase)
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -793,6 +718,7 @@ DEFINE_FUNCTION(APOIManager::execDeleteSourcePOIs)
 	P_THIS->DeleteSourcePOIs();
 	P_NATIVE_END;
 }
+#endif
 // ********** End Class APOIManager Function DeleteSourcePOIs **************************************
 
 // ********** Begin Class APOIManager Function GetAllPOIIds ****************************************
@@ -1102,7 +1028,7 @@ const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_WorldContext
 const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_Start = { "Start", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, Start), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Start_MetaData), NewProp_Start_MetaData) };
 const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_End = { "End", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, End), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_End_MetaData), NewProp_End_MetaData) };
 const UECodeGen_Private::FStrPropertyParams UHT_STATICS::NewProp_OutPOI_ID = { "OutPOI_ID", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Str, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, OutPOI_ID), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_OutCameraSpecs = { "OutCameraSpecs", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, OutCameraSpecs), Z_Construct_UScriptStruct_FPOIHitResult, METADATA_PARAMS(0, nullptr) }; // be138b667e4ce003a37e2a9d99985b2bff51c245
+const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_OutCameraSpecs = { "OutCameraSpecs", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, OutCameraSpecs), Z_Construct_UScriptStruct_FPOIHitResult, METADATA_PARAMS(0, nullptr) }; // 23a0be7379ea8e2b2e5700333512e0029fb02ba6
 const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, nullptr, nullptr, 1, STRUCT_OFFSET(POIManager_eventSelectPOIByTrace_Parms, ReturnValue), Z_Construct_UClass_APOIManager, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_WorldContextObject,
@@ -1309,6 +1235,49 @@ DEFINE_FUNCTION(APOIManager::execShowAll)
 }
 // ********** End Class APOIManager Function ShowAll ***********************************************
 
+// ********** Begin Class APOIManager Function SpawnTestPOIs ***************************************
+#if WITH_EDITOR
+#ifdef UHT_STATICS
+#error UHT_STATICS already defined
+#endif
+#define UHT_STATICS Z_Construct_UFunction_APOIManager_SpawnTestPOIs_Statics
+struct UHT_STATICS
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
+		{ "CallInEditor", "true" },
+		{ "Category", "POI|Test" },
+		{ "Comment", "// Spawns TestSpawnCount source POI actors in a building-shaped grid with\n// sequential IDs and random cube meshes -- for bake/HISM load testing only.\n" },
+		{ "ModuleRelativePath", "Public/POIManager.h" },
+		{ "ToolTip", "Spawns TestSpawnCount source POI actors in a building-shaped grid with\nsequential IDs and random cube meshes -- for bake/HISM load testing only." },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function SpawnTestPOIs constinit property declarations *************************
+// ********** End Function SpawnTestPOIs constinit property declarations ***************************
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams UHT_STATICS::FuncParams = { { (FTypeConstructFunc*)Z_Construct_UClass_APOIManager, nullptr, "SpawnTestPOIs", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x20020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)},  };
+UFunction* Z_Construct_UFunction_APOIManager_SpawnTestPOIs(ETypeConstructPhase Phase)
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, UHT_STATICS::FuncParams);
+	}
+	return ReturnFunction;
+}
+#undef UHT_STATICS
+DEFINE_FUNCTION(APOIManager::execSpawnTestPOIs)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->SpawnTestPOIs();
+	P_NATIVE_END;
+}
+#endif
+// ********** End Class APOIManager Function SpawnTestPOIs *****************************************
+
 // ********** Begin Class APOIManager Function TraceForPOI *****************************************
 #ifdef UHT_STATICS
 #error UHT_STATICS already defined
@@ -1326,9 +1295,9 @@ struct UHT_STATICS
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
 		{ "Category", "POI" },
-		{ "Comment", "// Multi line trace Start->End that skips hidden POIs (cubes Overlap, so the ray\n// passes through them) and returns the POI_ID of the nearest VISIBLE one.\n" },
+		{ "Comment", "// Multi line trace Start->End that skips hidden POIs (instances Overlap, so the\n// ray passes through them) and returns the POI_ID of the nearest VISIBLE one.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Multi line trace Start->End that skips hidden POIs (cubes Overlap, so the ray\npasses through them) and returns the POI_ID of the nearest VISIBLE one." },
+		{ "ToolTip", "Multi line trace Start->End that skips hidden POIs (instances Overlap, so the\nray passes through them) and returns the POI_ID of the nearest VISIBLE one." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Start_MetaData[] = {
 		{ "NativeConst", "" },
@@ -1398,10 +1367,11 @@ struct UHT_STATICS
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "Comment", "// Base POI manager (Abstract -- place the subclasses below instead).\n// Bakes hundreds/thousands of source POI actors into a few HISMs: one shared\n// invisible cube HISM for clicks + one display HISM per distinct mesh. All visual\n// state (show/hide, color, selection) is per-instance custom data read by the\n// material on the GPU -- no per-frame CPU work, no per-instance SetVisibility.\n" },
+		{ "Comment", "// Bakes hundreds/thousands of source POI actors (BP_POI_House: one translucent\n// Cube that is both display and click volume) into one HISM per distinct mesh.\n// All visual state (show/hide, color, selection) is per-instance custom data read\n// by the material on the GPU -- no per-frame CPU work, no per-instance SetVisibility.\n" },
+		{ "DisplayName", "POI Manager" },
 		{ "IncludePath", "POIManager.h" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Base POI manager (Abstract -- place the subclasses below instead).\nBakes hundreds/thousands of source POI actors into a few HISMs: one shared\ninvisible cube HISM for clicks + one display HISM per distinct mesh. All visual\nstate (show/hide, color, selection) is per-instance custom data read by the\nmaterial on the GPU -- no per-frame CPU work, no per-instance SetVisibility." },
+		{ "ToolTip", "Bakes hundreds/thousands of source POI actors (BP_POI_House: one translucent\nCube that is both display and click volume) into one HISM per distinct mesh.\nAll visual state (show/hide, color, selection) is per-instance custom data read\nby the material on the GPU -- no per-frame CPU work, no per-instance SetVisibility." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SceneRoot_MetaData[] = {
 		{ "Comment", "// ---- Serialized state (saved with the map) ----\n" },
@@ -1415,36 +1385,16 @@ struct UHT_STATICS
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 		{ "ToolTip", "Read-only view of the baked data for debugging. Never hand-edit -- the HISMs\nare rebuilt from this array and would go out of sync." },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CubeMesh_MetaData[] = {
-		{ "Category", "POI" },
-		{ "Comment", "// Mesh for the shared click-cube HISM (taken from the first baked POI when unset).\n" },
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MaterialsByMesh_MetaData[] = {
+		{ "Comment", "// Materials captured from the source Cube components at bake time, per mesh kind.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Mesh for the shared click-cube HISM (taken from the first baked POI when unset)." },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlaneMaterialsByMesh_MetaData[] = {
-		{ "Comment", "// Materials captured from the source display components at bake time, per mesh kind.\n" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Materials captured from the source display components at bake time, per mesh kind." },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BakeScope_MetaData[] = {
-		{ "Category", "POI" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POIClassRef_MetaData[] = {
-		{ "Category", "POI" },
-		{ "Comment", "// Source actor classes. Soft refs: editor dropdown + they follow redirectors if\n// the asset is moved/renamed.\n" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Source actor classes. Soft refs: editor dropdown + they follow redirectors if\nthe asset is moved/renamed." },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POIHouseClassRef_MetaData[] = {
-		{ "Category", "POI" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
+		{ "ToolTip", "Materials captured from the source Cube components at bake time, per mesh kind." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POITraceChannel_MetaData[] = {
 		{ "Category", "POI" },
-		{ "Comment", "// Trace channel for POI clicks. Cubes respond Overlap (NOT Block) so a multi\n// trace passes through hidden POIs to visible ones behind them. Default is the\n// dedicated \"POITrace\" channel (ECC_GameTraceChannel1, declared in\n// DefaultEngine.ini with DefaultResponse=Ignore so walls/floors never block the\n// ray). Do NOT use ECC_Visibility -- environment geometry blocks that channel.\n" },
+		{ "Comment", "// Trace channel for POI clicks. Instances respond Overlap (NOT Block) so a multi\n// trace passes through hidden POIs to visible ones behind them. Default is the\n// dedicated \"POITrace\" channel (ECC_GameTraceChannel1, declared in\n// DefaultEngine.ini with DefaultResponse=Ignore so walls/floors never block the\n// ray). Do NOT use ECC_Visibility -- environment geometry blocks that channel.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Trace channel for POI clicks. Cubes respond Overlap (NOT Block) so a multi\ntrace passes through hidden POIs to visible ones behind them. Default is the\ndedicated \"POITrace\" channel (ECC_GameTraceChannel1, declared in\nDefaultEngine.ini with DefaultResponse=Ignore so walls/floors never block the\nray). Do NOT use ECC_Visibility -- environment geometry blocks that channel." },
+		{ "ToolTip", "Trace channel for POI clicks. Instances respond Overlap (NOT Block) so a multi\ntrace passes through hidden POIs to visible ones behind them. Default is the\ndedicated \"POITrace\" channel (ECC_GameTraceChannel1, declared in\nDefaultEngine.ini with DefaultResponse=Ignore so walls/floors never block the\nray). Do NOT use ECC_Visibility -- environment geometry blocks that channel." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bDeselectOnMissedClick_MetaData[] = {
 		{ "Category", "POI" },
@@ -1454,32 +1404,51 @@ struct UHT_STATICS
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NumCustomDataFloats_MetaData[] = {
 		{ "Category", "POI" },
-		{ "Comment", "// Custom data floats per instance. Slot layout (the material must read these):\n//   0      Visible (1/0) -> Opacity Mask         (the only hide mechanism)\n//   1..3   RGB color (default white)\n//   4      Selected (1/0) -> brighter emissive\n//   5      SelectTime (world seconds at selection; material runs a decaying\n//          envelope on Time - slot5 for a one-shot pulse)\n" },
+		{ "ClampMax", "32" },
+		{ "ClampMin", "4" },
+		{ "Comment", "// Custom data floats per instance. Slot layout (the material must read these):\n//   0      Visible (1/0) -> Opacity Mask         (the only hide mechanism)\n//   1..3   RGB color (default white)\n//   4      Selected (1/0) -> brighter emissive\n//   5      SelectTime (world seconds at selection; material runs a decaying\n//          envelope on Time - slot5 for a one-shot pulse)\n// Minimum 4: slots 0..3 are always written.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Custom data floats per instance. Slot layout (the material must read these):\n  0      Visible (1/0) -> Opacity Mask         (the only hide mechanism)\n  1..3   RGB color (default white)\n  4      Selected (1/0) -> brighter emissive\n  5      SelectTime (world seconds at selection; material runs a decaying\n         envelope on Time - slot5 for a one-shot pulse)" },
+		{ "ToolTip", "Custom data floats per instance. Slot layout (the material must read these):\n  0      Visible (1/0) -> Opacity Mask         (the only hide mechanism)\n  1..3   RGB color (default white)\n  4      Selected (1/0) -> brighter emissive\n  5      SelectTime (world seconds at selection; material runs a decaying\n         envelope on Time - slot5 for a one-shot pulse)\nMinimum 4: slots 0..3 are always written." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SelectedDataIndex_MetaData[] = {
 		{ "Category", "POI" },
+		{ "ClampMax", "31" },
+		{ "ClampMin", "0" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SelectTimeDataIndex_MetaData[] = {
 		{ "Category", "POI" },
+		{ "ClampMax", "31" },
+		{ "ClampMin", "-1" },
+		{ "Comment", "// -1 = no timestamp slot (selection still works, the pulse does not).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
+		{ "ToolTip", "-1 = no timestamp slot (selection still works, the pulse does not)." },
+	};
+#if WITH_EDITORONLY_DATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POIClassRef_MetaData[] = {
+		{ "Category", "POI" },
+		{ "Comment", "// Source actor class for the editor buttons. Soft ref: editor dropdown + it\n// follows redirectors if the asset is moved/renamed.\n" },
+		{ "ModuleRelativePath", "Public/POIManager.h" },
+		{ "ToolTip", "Source actor class for the editor buttons. Soft ref: editor dropdown + it\nfollows redirectors if the asset is moved/renamed." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TestSpawnCount_MetaData[] = {
 		{ "Category", "POI|Test" },
-		{ "Comment", "// ---- Test spawning (shared by the Room/House \"Spawn Test POIs\" buttons; test-only) ----\n" },
+		{ "ClampMax", "20000" },
+		{ "ClampMin", "1" },
+		{ "Comment", "// ---- Test spawning (the \"Spawn Test POIs\" button; test-only) ----\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "---- Test spawning (shared by the Room/House \"Spawn Test POIs\" buttons; test-only) ----" },
+		{ "ToolTip", "---- Test spawning (the \"Spawn Test POIs\" button; test-only) ----" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TestGridColumns_MetaData[] = {
 		{ "Category", "POI|Test" },
+		{ "ClampMin", "1" },
 		{ "Comment", "// POIs per row (X axis).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 		{ "ToolTip", "POIs per row (X axis)." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TestGridRows_MetaData[] = {
 		{ "Category", "POI|Test" },
+		{ "ClampMin", "1" },
 		{ "Comment", "// Rows per floor (Y axis).\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 		{ "ToolTip", "Rows per floor (Y axis)." },
@@ -1490,25 +1459,26 @@ struct UHT_STATICS
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 		{ "ToolTip", "Spacing in cm: X = column, Y = row, Z = floor height." },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CubeHISM_MetaData[] = {
-		{ "Comment", "// ---- Transient: rebuilt from BakedEntries on every load ----\n" },
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TestCubeMeshes_MetaData[] = {
+		{ "Category", "POI|Test" },
+		{ "Comment", "// Meshes assigned randomly to spawned POIs' Cube component. Empty -> engine BasicShapes cube.\n" },
+		{ "ModuleRelativePath", "Public/POIManager.h" },
+		{ "ToolTip", "Meshes assigned randomly to spawned POIs' Cube component. Empty -> engine BasicShapes cube." },
+	};
+#endif // WITH_EDITORONLY_DATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_HISMs_MetaData[] = {
+		{ "Comment", "// Parallel arrays: HISMs[i] renders instances of MeshKeys[i].\n" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "---- Transient: rebuilt from BakedEntries on every load ----" },
+		{ "ToolTip", "Parallel arrays: HISMs[i] renders instances of MeshKeys[i]." },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlaneHISMs_MetaData[] = {
-		{ "Comment", "// Parallel arrays: PlaneHISMs[i] renders instances of PlaneMeshKeys[i].\n" },
-		{ "EditInline", "true" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Parallel arrays: PlaneHISMs[i] renders instances of PlaneMeshKeys[i]." },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlaneMeshKeys_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_MeshKeys_MetaData[] = {
 		{ "ModuleRelativePath", "Public/POIManager.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_POIInstances_MetaData[] = {
-		{ "Comment", "// One entry per cube instance, same order as CubeHISM's instances.\n" },
+		{ "Comment", "// One entry per baked POI, same order as BakedEntries.\n" },
 		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "One entry per cube instance, same order as CubeHISM's instances." },
+		{ "ToolTip", "One entry per baked POI, same order as BakedEntries." },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SelectedPOI_ID_MetaData[] = {
 		{ "Comment", "// Currently selected POI_ID (empty = none). Transient: fresh instances default\n// to Selected = 0, so the selection resets with the HISMs.\n" },
@@ -1521,14 +1491,9 @@ struct UHT_STATICS
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_SceneRoot;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_BakedEntries_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_BakedEntries;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_CubeMesh;
-	static const UECodeGen_Private::FStructPropertyParams NewProp_PlaneMaterialsByMesh_ValueProp;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_PlaneMaterialsByMesh_Key_KeyProp;
-	static const UECodeGen_Private::FMapPropertyParams NewProp_PlaneMaterialsByMesh;
-	static const UECodeGen_Private::FBytePropertyParams NewProp_BakeScope_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_BakeScope;
-	static const UECodeGen_Private::FSoftClassPropertyParams NewProp_POIClassRef;
-	static const UECodeGen_Private::FSoftClassPropertyParams NewProp_POIHouseClassRef;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_MaterialsByMesh_ValueProp;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_MaterialsByMesh_Key_KeyProp;
+	static const UECodeGen_Private::FMapPropertyParams NewProp_MaterialsByMesh;
 	static const UECodeGen_Private::FBytePropertyParams NewProp_POITraceChannel;
 	static void NewProp_bDeselectOnMissedClick_SetBit(void* Obj)
 	{
@@ -1538,15 +1503,19 @@ struct UHT_STATICS
 	static const UECodeGen_Private::FIntPropertyParams NewProp_NumCustomDataFloats;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_SelectedDataIndex;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_SelectTimeDataIndex;
+#if WITH_EDITORONLY_DATA
+	static const UECodeGen_Private::FSoftClassPropertyParams NewProp_POIClassRef;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_TestSpawnCount;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_TestGridColumns;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_TestGridRows;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_TestGridSpacing;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_CubeHISM;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_PlaneHISMs_Inner;
-	static const UECodeGen_Private::FArrayPropertyParams NewProp_PlaneHISMs;
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_PlaneMeshKeys_Inner;
-	static const UECodeGen_Private::FArrayPropertyParams NewProp_PlaneMeshKeys;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_TestCubeMeshes_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_TestCubeMeshes;
+#endif // WITH_EDITORONLY_DATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_HISMs_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_HISMs;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_MeshKeys_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_MeshKeys;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_POIInstances_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_POIInstances;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_SelectedPOI_ID;
@@ -1556,8 +1525,10 @@ struct UHT_STATICS
 		{ .NameUTF8 = UTF8TEXT("ApplyColorMap"), .Pointer = &APOIManager::execApplyColorMap },
 		{ .NameUTF8 = UTF8TEXT("ApplyHiddenSet"), .Pointer = &APOIManager::execApplyHiddenSet },
 		{ .NameUTF8 = UTF8TEXT("ApplyVisibleSet"), .Pointer = &APOIManager::execApplyVisibleSet },
+#if WITH_EDITOR
 		{ .NameUTF8 = UTF8TEXT("BakeFromLevel"), .Pointer = &APOIManager::execBakeFromLevel },
 		{ .NameUTF8 = UTF8TEXT("DeleteSourcePOIs"), .Pointer = &APOIManager::execDeleteSourcePOIs },
+#endif // WITH_EDITOR
 		{ .NameUTF8 = UTF8TEXT("GetAllPOIIds"), .Pointer = &APOIManager::execGetAllPOIIds },
 		{ .NameUTF8 = UTF8TEXT("GetPOICameraData"), .Pointer = &APOIManager::execGetPOICameraData },
 		{ .NameUTF8 = UTF8TEXT("HiddenAll"), .Pointer = &APOIManager::execHiddenAll },
@@ -1566,6 +1537,9 @@ struct UHT_STATICS
 		{ .NameUTF8 = UTF8TEXT("SetPOIColor"), .Pointer = &APOIManager::execSetPOIColor },
 		{ .NameUTF8 = UTF8TEXT("SetSelectedPOI"), .Pointer = &APOIManager::execSetSelectedPOI },
 		{ .NameUTF8 = UTF8TEXT("ShowAll"), .Pointer = &APOIManager::execShowAll },
+#if WITH_EDITOR
+		{ .NameUTF8 = UTF8TEXT("SpawnTestPOIs"), .Pointer = &APOIManager::execSpawnTestPOIs },
+#endif // WITH_EDITOR
 		{ .NameUTF8 = UTF8TEXT("TraceForPOI"), .Pointer = &APOIManager::execTraceForPOI },
 	};
 	static FTypeConstructFunc* DependentSingletons[];
@@ -1573,17 +1547,22 @@ struct UHT_STATICS
 		{ &Z_Construct_UFunction_APOIManager_ApplyColorMap, "ApplyColorMap" }, // c461e4775d2d254d3218a1bbd968bbaffc51a9dc
 		{ &Z_Construct_UFunction_APOIManager_ApplyHiddenSet, "ApplyHiddenSet" }, // 4bb537c912381167b6fc62f09ade35dbeec9dd92
 		{ &Z_Construct_UFunction_APOIManager_ApplyVisibleSet, "ApplyVisibleSet" }, // a4d7e781377a817449ef86dba686fa28b4d4e1ac
-		{ &Z_Construct_UFunction_APOIManager_BakeFromLevel, "BakeFromLevel" }, // 54ee616a846358d794f11c1727cc3482a0c6aedd
-		{ &Z_Construct_UFunction_APOIManager_DeleteSourcePOIs, "DeleteSourcePOIs" }, // 9cb6013c03e320f073ab4fb3846b4002d404ef36
+#if WITH_EDITOR
+		{ &Z_Construct_UFunction_APOIManager_BakeFromLevel, "BakeFromLevel" }, // 2c599b6967588a5ae07a791a9076f9e25e3dc408
+		{ &Z_Construct_UFunction_APOIManager_DeleteSourcePOIs, "DeleteSourcePOIs" }, // 51fc4d59282d0d5fff6226702812c144b14da36c
+#endif // WITH_EDITOR
 		{ &Z_Construct_UFunction_APOIManager_GetAllPOIIds, "GetAllPOIIds" }, // 20dc40677b5aa538f3403efd00d0b414ce780da9
 		{ &Z_Construct_UFunction_APOIManager_GetPOICameraData, "GetPOICameraData" }, // a6372474073f009493fec12d6ab48f200bf7aec6
 		{ &Z_Construct_UFunction_APOIManager_HiddenAll, "HiddenAll" }, // dbb1f42c51ab0e9e76b23cd1bdbf4ef86866a336
 		{ &Z_Construct_UFunction_APOIManager_ResolveClick, "ResolveClick" }, // 19ba5d4dd9eb9b56962ecbb5bd9e78da32d4d608
-		{ &Z_Construct_UFunction_APOIManager_SelectPOIByTrace, "SelectPOIByTrace" }, // 4e2dd99686bda058416e0043e0338af36653df6d
+		{ &Z_Construct_UFunction_APOIManager_SelectPOIByTrace, "SelectPOIByTrace" }, // a521410f9b2d5c8a3e3dd922d89830b650f6154f
 		{ &Z_Construct_UFunction_APOIManager_SetPOIColor, "SetPOIColor" }, // 4e8381bd4a67b248b4d52dab3b4d8aac8584a19a
 		{ &Z_Construct_UFunction_APOIManager_SetSelectedPOI, "SetSelectedPOI" }, // e82e1df6bc4e2dbd5d41a6b8296311329bf80af5
 		{ &Z_Construct_UFunction_APOIManager_ShowAll, "ShowAll" }, // 8cc5e0690af2b47e63718b34be8004c0b548147b
-		{ &Z_Construct_UFunction_APOIManager_TraceForPOI, "TraceForPOI" }, // b04058c922d6e8adaa123e1fb6772ea04daf7429
+#if WITH_EDITOR
+		{ &Z_Construct_UFunction_APOIManager_SpawnTestPOIs, "SpawnTestPOIs" }, // 61b62210755b2286c58f94b5cf773f9185cf47e7
+#endif // WITH_EDITOR
+		{ &Z_Construct_UFunction_APOIManager_TraceForPOI, "TraceForPOI" }, // 30015fcb0ea99546f7bfe1bb21b49037d6adcae6
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -1594,59 +1573,57 @@ struct UHT_STATICS
 
 // ********** Begin Class APOIManager Property Definitions *****************************************
 const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_SceneRoot = { "SceneRoot", nullptr, (EPropertyFlags)0x0124080000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, SceneRoot), Z_Construct_UClass_USceneComponent, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SceneRoot_MetaData), NewProp_SceneRoot_MetaData) };
-const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_BakedEntries_Inner = { "BakedEntries", nullptr, (EPropertyFlags)0x0000000000020000, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FPOIBakeEntry, METADATA_PARAMS(0, nullptr) }; // 9ed44a6ea817449d6be74c9f4adb386c3cf7c0d8
-const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_BakedEntries = { "BakedEntries", nullptr, (EPropertyFlags)0x0020080000020001, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, BakedEntries), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BakedEntries_MetaData), NewProp_BakedEntries_MetaData) }; // 9ed44a6ea817449d6be74c9f4adb386c3cf7c0d8
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_CubeMesh = { "CubeMesh", nullptr, (EPropertyFlags)0x0124080000000001, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, CubeMesh), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CubeMesh_MetaData), NewProp_CubeMesh_MetaData) };
-const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_PlaneMaterialsByMesh_ValueProp = { "PlaneMaterialsByMesh", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FPlaneMaterialSet, METADATA_PARAMS(0, nullptr) }; // f95708ea8e5c23ea63db8b99cb7ec1f8c5f3658a
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_PlaneMaterialsByMesh_Key_KeyProp = { "PlaneMaterialsByMesh_Key", nullptr, (EPropertyFlags)0x0004000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FMapPropertyParams UHT_STATICS::NewProp_PlaneMaterialsByMesh = { "PlaneMaterialsByMesh", nullptr, (EPropertyFlags)0x0020080000000000, UECodeGen_Private::EPropertyGenFlags::Map, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, PlaneMaterialsByMesh), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneMaterialsByMesh_MetaData), NewProp_PlaneMaterialsByMesh_MetaData) }; // f95708ea8e5c23ea63db8b99cb7ec1f8c5f3658a
-const UECodeGen_Private::FBytePropertyParams UHT_STATICS::NewProp_BakeScope_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams UHT_STATICS::NewProp_BakeScope = { "BakeScope", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Enum, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, BakeScope), Z_Construct_UEnum_REX_Interaction_EPOIBakeScope, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BakeScope_MetaData), NewProp_BakeScope_MetaData) }; // f0a90e033fbfb7ab9ecfbdf854310d2853fd3731
-const UECodeGen_Private::FSoftClassPropertyParams UHT_STATICS::NewProp_POIClassRef = { "POIClassRef", nullptr, (EPropertyFlags)0x0024080000000001, UECodeGen_Private::EPropertyGenFlags::SoftClass, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POIClassRef), Z_Construct_UClass_AActor, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POIClassRef_MetaData), NewProp_POIClassRef_MetaData) };
-const UECodeGen_Private::FSoftClassPropertyParams UHT_STATICS::NewProp_POIHouseClassRef = { "POIHouseClassRef", nullptr, (EPropertyFlags)0x0024080000000001, UECodeGen_Private::EPropertyGenFlags::SoftClass, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POIHouseClassRef), Z_Construct_UClass_AActor, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POIHouseClassRef_MetaData), NewProp_POIHouseClassRef_MetaData) };
+const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_BakedEntries_Inner = { "BakedEntries", nullptr, (EPropertyFlags)0x0000000000020000, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FPOIBakeEntry, METADATA_PARAMS(0, nullptr) }; // e9d0b9af23d96cda08ae12b6072acfdab773e37d
+const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_BakedEntries = { "BakedEntries", nullptr, (EPropertyFlags)0x0020080000020001, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, BakedEntries), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BakedEntries_MetaData), NewProp_BakedEntries_MetaData) }; // e9d0b9af23d96cda08ae12b6072acfdab773e37d
+const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_MaterialsByMesh_ValueProp = { "MaterialsByMesh", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FPOIMaterialSet, METADATA_PARAMS(0, nullptr) }; // d3d24883c04527405daa286ab730b39aeca3d47e
+const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_MaterialsByMesh_Key_KeyProp = { "MaterialsByMesh_Key", nullptr, (EPropertyFlags)0x0004000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FMapPropertyParams UHT_STATICS::NewProp_MaterialsByMesh = { "MaterialsByMesh", nullptr, (EPropertyFlags)0x0020080000000000, UECodeGen_Private::EPropertyGenFlags::Map, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, MaterialsByMesh), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MaterialsByMesh_MetaData), NewProp_MaterialsByMesh_MetaData) }; // d3d24883c04527405daa286ab730b39aeca3d47e
 const UECodeGen_Private::FBytePropertyParams UHT_STATICS::NewProp_POITraceChannel = { "POITraceChannel", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Byte, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POITraceChannel), Z_Construct_UEnum_Engine_ECollisionChannel, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POITraceChannel_MetaData), NewProp_POITraceChannel_MetaData) }; // 3aff698625c18cc2ccaa87a587b2eac8c50cdec7
 const UECodeGen_Private::FBoolPropertyParams UHT_STATICS::NewProp_bDeselectOnMissedClick = { "bDeselectOnMissedClick", nullptr, (EPropertyFlags)0x0020080000000005, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, nullptr, nullptr, 1, sizeof(bool), sizeof(APOIManager), &UHT_STATICS::NewProp_bDeselectOnMissedClick_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_bDeselectOnMissedClick_MetaData), NewProp_bDeselectOnMissedClick_MetaData) };
 const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_NumCustomDataFloats = { "NumCustomDataFloats", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, NumCustomDataFloats), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NumCustomDataFloats_MetaData), NewProp_NumCustomDataFloats_MetaData) };
 const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_SelectedDataIndex = { "SelectedDataIndex", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, SelectedDataIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedDataIndex_MetaData), NewProp_SelectedDataIndex_MetaData) };
 const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_SelectTimeDataIndex = { "SelectTimeDataIndex", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, SelectTimeDataIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectTimeDataIndex_MetaData), NewProp_SelectTimeDataIndex_MetaData) };
-const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_TestSpawnCount = { "TestSpawnCount", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestSpawnCount), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestSpawnCount_MetaData), NewProp_TestSpawnCount_MetaData) };
-const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_TestGridColumns = { "TestGridColumns", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestGridColumns), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestGridColumns_MetaData), NewProp_TestGridColumns_MetaData) };
-const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_TestGridRows = { "TestGridRows", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestGridRows), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestGridRows_MetaData), NewProp_TestGridRows_MetaData) };
-const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_TestGridSpacing = { "TestGridSpacing", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestGridSpacing), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestGridSpacing_MetaData), NewProp_TestGridSpacing_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_CubeHISM = { "CubeHISM", nullptr, (EPropertyFlags)0x0124080000082008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, CubeHISM), Z_Construct_UClass_UCustomHISMC, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CubeHISM_MetaData), NewProp_CubeHISM_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_PlaneHISMs_Inner = { "PlaneHISMs", nullptr, (EPropertyFlags)0x0104000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UCustomHISMC, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_PlaneHISMs = { "PlaneHISMs", nullptr, (EPropertyFlags)0x0124088000002008, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, PlaneHISMs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneHISMs_MetaData), NewProp_PlaneHISMs_MetaData) };
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_PlaneMeshKeys_Inner = { "PlaneMeshKeys", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_PlaneMeshKeys = { "PlaneMeshKeys", nullptr, (EPropertyFlags)0x0124080000002000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, PlaneMeshKeys), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlaneMeshKeys_MetaData), NewProp_PlaneMeshKeys_MetaData) };
-const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_POIInstances_Inner = { "POIInstances", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FPOIRuntimeInstance, METADATA_PARAMS(0, nullptr) }; // 76d4084e50fb3af2644e96ab26a1e9236ecddf7b
-const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_POIInstances = { "POIInstances", nullptr, (EPropertyFlags)0x0020080000002000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POIInstances), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POIInstances_MetaData), NewProp_POIInstances_MetaData) }; // 76d4084e50fb3af2644e96ab26a1e9236ecddf7b
+#if WITH_EDITORONLY_DATA
+const UECodeGen_Private::FSoftClassPropertyParams UHT_STATICS::NewProp_POIClassRef = { "POIClassRef", nullptr, (EPropertyFlags)0x0024080800000001, UECodeGen_Private::EPropertyGenFlags::SoftClass, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POIClassRef), Z_Construct_UClass_AActor, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POIClassRef_MetaData), NewProp_POIClassRef_MetaData) };
+const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_TestSpawnCount = { "TestSpawnCount", nullptr, (EPropertyFlags)0x0020080800000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestSpawnCount), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestSpawnCount_MetaData), NewProp_TestSpawnCount_MetaData) };
+const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_TestGridColumns = { "TestGridColumns", nullptr, (EPropertyFlags)0x0020080800000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestGridColumns), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestGridColumns_MetaData), NewProp_TestGridColumns_MetaData) };
+const UECodeGen_Private::FIntPropertyParams UHT_STATICS::NewProp_TestGridRows = { "TestGridRows", nullptr, (EPropertyFlags)0x0020080800000001, UECodeGen_Private::EPropertyGenFlags::Int, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestGridRows), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestGridRows_MetaData), NewProp_TestGridRows_MetaData) };
+const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_TestGridSpacing = { "TestGridSpacing", nullptr, (EPropertyFlags)0x0020080800000001, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestGridSpacing), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestGridSpacing_MetaData), NewProp_TestGridSpacing_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_TestCubeMeshes_Inner = { "TestCubeMeshes", nullptr, (EPropertyFlags)0x0104000800000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_TestCubeMeshes = { "TestCubeMeshes", nullptr, (EPropertyFlags)0x0124080800000001, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, TestCubeMeshes), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestCubeMeshes_MetaData), NewProp_TestCubeMeshes_MetaData) };
+#endif // WITH_EDITORONLY_DATA
+const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_HISMs_Inner = { "HISMs", nullptr, (EPropertyFlags)0x0104000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UCustomHISMC, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_HISMs = { "HISMs", nullptr, (EPropertyFlags)0x0124088000002008, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, HISMs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_HISMs_MetaData), NewProp_HISMs_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_MeshKeys_Inner = { "MeshKeys", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_MeshKeys = { "MeshKeys", nullptr, (EPropertyFlags)0x0124080000002000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, MeshKeys), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MeshKeys_MetaData), NewProp_MeshKeys_MetaData) };
+const UECodeGen_Private::FStructPropertyParams UHT_STATICS::NewProp_POIInstances_Inner = { "POIInstances", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FPOIRuntimeInstance, METADATA_PARAMS(0, nullptr) }; // b527f913b88f7ef1c3c4c4af12b7bf3088cf53b5
+const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_POIInstances = { "POIInstances", nullptr, (EPropertyFlags)0x0020080000002000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, POIInstances), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_POIInstances_MetaData), NewProp_POIInstances_MetaData) }; // b527f913b88f7ef1c3c4c4af12b7bf3088cf53b5
 const UECodeGen_Private::FStrPropertyParams UHT_STATICS::NewProp_SelectedPOI_ID = { "SelectedPOI_ID", nullptr, (EPropertyFlags)0x0020080000002000, UECodeGen_Private::EPropertyGenFlags::Str, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManager, SelectedPOI_ID), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedPOI_ID_MetaData), NewProp_SelectedPOI_ID_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_SceneRoot,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_BakedEntries_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_BakedEntries,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_CubeMesh,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneMaterialsByMesh_ValueProp,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneMaterialsByMesh_Key_KeyProp,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneMaterialsByMesh,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_BakeScope_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_BakeScope,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POIClassRef,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POIHouseClassRef,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_MaterialsByMesh_ValueProp,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_MaterialsByMesh_Key_KeyProp,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_MaterialsByMesh,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POITraceChannel,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_bDeselectOnMissedClick,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_NumCustomDataFloats,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_SelectedDataIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_SelectTimeDataIndex,
+#if WITH_EDITORONLY_DATA
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POIClassRef,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestSpawnCount,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestGridColumns,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestGridRows,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestGridSpacing,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_CubeHISM,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneHISMs_Inner,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneHISMs,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneMeshKeys_Inner,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_PlaneMeshKeys,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestCubeMeshes_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestCubeMeshes,
+#endif // WITH_EDITORONLY_DATA
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_HISMs_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_HISMs,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_MeshKeys_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_MeshKeys,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POIInstances_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_POIInstances,
 	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_SelectedPOI_ID,
@@ -1670,7 +1647,7 @@ const UECodeGen_Private::FClassParams UHT_STATICS::ClassParams = {
 	UE_ARRAY_COUNT(FuncInfo),
 	UE_ARRAY_COUNT(UHT_STATICS::PropPointers),
 	0,
-	0x009000A5u,
+	0x009000A4u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)
 };
 static void APOIManager_StaticRegisterNativesAPOIManager()
@@ -1716,316 +1693,6 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_NS(, APOIManager);
 APOIManager::~APOIManager() {}
 // ********** End Class APOIManager ****************************************************************
 
-// ********** Begin Class APOIManagerRoom Function SpawnTestPOIs ***********************************
-#ifdef UHT_STATICS
-#error UHT_STATICS already defined
-#endif
-#define UHT_STATICS Z_Construct_UFunction_APOIManagerRoom_SpawnTestPOIs_Statics
-struct UHT_STATICS
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "CallInEditor", "true" },
-		{ "Category", "POI|Test" },
-		{ "Comment", "// Spawns TestSpawnCount source POI actors in a building-shaped grid with sequential\n// IDs and random plane meshes -- for bake/HISM load testing only.\n" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Spawns TestSpawnCount source POI actors in a building-shaped grid with sequential\nIDs and random plane meshes -- for bake/HISM load testing only." },
-	};
-#endif // WITH_METADATA
-
-// ********** Begin Function SpawnTestPOIs constinit property declarations *************************
-// ********** End Function SpawnTestPOIs constinit property declarations ***************************
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams UHT_STATICS::FuncParams = { { (FTypeConstructFunc*)Z_Construct_UClass_APOIManagerRoom, nullptr, "SpawnTestPOIs", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)},  };
-UFunction* Z_Construct_UFunction_APOIManagerRoom_SpawnTestPOIs(ETypeConstructPhase Phase)
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, UHT_STATICS::FuncParams);
-	}
-	return ReturnFunction;
-}
-#undef UHT_STATICS
-DEFINE_FUNCTION(APOIManagerRoom::execSpawnTestPOIs)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->SpawnTestPOIs();
-	P_NATIVE_END;
-}
-// ********** End Class APOIManagerRoom Function SpawnTestPOIs *************************************
-
-// ********** Begin Class APOIManagerRoom **********************************************************
-#ifdef UHT_STATICS
-#error UHT_STATICS already defined
-#endif
-#define UHT_STATICS Z_Construct_UClass_APOIManagerRoom_Statics
-struct UHT_STATICS
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "Comment", "// Manager for plane-style POIs (rooms). BakeScope locked to PlaneOnly in the constructor.\n" },
-		{ "DisplayName", "POI Manager - Room" },
-		{ "IncludePath", "POIManager.h" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Manager for plane-style POIs (rooms). BakeScope locked to PlaneOnly in the constructor." },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TestPlaneMeshes_MetaData[] = {
-		{ "Category", "POI|Test" },
-		{ "Comment", "// Meshes assigned randomly to spawned POIs' Plane component. Empty -> engine BasicShapes planes.\n" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Meshes assigned randomly to spawned POIs' Plane component. Empty -> engine BasicShapes planes." },
-	};
-#endif // WITH_METADATA
-
-// ********** Begin Class APOIManagerRoom constinit property declarations **************************
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_TestPlaneMeshes_Inner;
-	static const UECodeGen_Private::FArrayPropertyParams NewProp_TestPlaneMeshes;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-// ********** End Class APOIManagerRoom constinit property declarations ****************************
-	static constexpr UE::CodeGen::FClassNativeFunction Funcs[] = {
-		{ .NameUTF8 = UTF8TEXT("SpawnTestPOIs"), .Pointer = &APOIManagerRoom::execSpawnTestPOIs },
-	};
-	static FTypeConstructFunc* DependentSingletons[];
-	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_APOIManagerRoom_SpawnTestPOIs, "SpawnTestPOIs" }, // 170ae21261195b1457fa33668b172db6e75b6281
-	};
-	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
-	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
-		TCppClassTypeTraits<APOIManagerRoom>::IsAbstract,
-	};
-	static const UECodeGen_Private::FClassParams ClassParams;
-}; // struct UHT_STATICS
-
-// ********** Begin Class APOIManagerRoom Property Definitions *************************************
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_TestPlaneMeshes_Inner = { "TestPlaneMeshes", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_TestPlaneMeshes = { "TestPlaneMeshes", nullptr, (EPropertyFlags)0x0124080000000001, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManagerRoom, TestPlaneMeshes), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestPlaneMeshes_MetaData), NewProp_TestPlaneMeshes_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestPlaneMeshes_Inner,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestPlaneMeshes,
-};
-static_assert(UE_ARRAY_COUNT(UHT_STATICS::PropPointers) < 2048);
-// ********** End Class APOIManagerRoom Property Definitions ***************************************
-FTypeConstructFunc* UHT_STATICS::DependentSingletons[] = {
-	(FTypeConstructFunc*)Z_Construct_UClass_APOIManager,
-	(FTypeConstructFunc*)Z_Construct_UPackage__Script_REX_Interaction,
-};
-static_assert(UE_ARRAY_COUNT(UHT_STATICS::DependentSingletons) < 16);
-const UECodeGen_Private::FClassParams UHT_STATICS::ClassParams = {
-	&Z_Construct_UClass_APOIManagerRoom,
-	"Engine",
-	&StaticCppClassTypeInfo,
-	DependentSingletons,
-	FuncInfo,
-	UHT_STATICS::PropPointers,
-	nullptr,
-	UE_ARRAY_COUNT(DependentSingletons),
-	UE_ARRAY_COUNT(FuncInfo),
-	UE_ARRAY_COUNT(UHT_STATICS::PropPointers),
-	0,
-	0x009000A4u,
-	METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)
-};
-static void APOIManagerRoom_StaticRegisterNativesAPOIManagerRoom()
-{
-	UClass* Class = APOIManagerRoom::StaticClass();
-	FNativeFunctionRegistrar::RegisterFunctions(Class, 		MakeConstArrayView(UHT_STATICS::Funcs));
-}
-FClassRegistrationInfo Z_Registration_Info_UClass_APOIManagerRoom;
-UClass* Z_Construct_UClass_APOIManagerRoom(ETypeConstructPhase Phase)
-{
-	if (Phase == ETypeConstructPhase::Inner)
-	{
-		using TClass = APOIManagerRoom;
-		if (!Z_Registration_Info_UClass_APOIManagerRoom.InnerSingleton)
-		{
-			GetPrivateStaticClassBody(
-				TClass::StaticPackage(),
-				TEXT("POIManagerRoom"),
-				Z_Registration_Info_UClass_APOIManagerRoom.InnerSingleton,
-				APOIManagerRoom_StaticRegisterNativesAPOIManagerRoom,
-				DataSizeOf<TClass>(),
-				alignof(TClass),
-				TClass::StaticClassFlags,
-				TClass::StaticClassCastFlags(),
-				TClass::StaticConfigName(),
-				(UClass::ClassConstructorType)InternalConstructor<TClass>,
-				(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
-				UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
-				&TClass::Super::StaticClass,
-				&TClass::WithinClass::StaticClass
-			);
-		}
-		return Z_Registration_Info_UClass_APOIManagerRoom.InnerSingleton;
-	}
-	if (!Z_Registration_Info_UClass_APOIManagerRoom.OuterSingleton)
-	{
-		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_APOIManagerRoom.OuterSingleton, UHT_STATICS::ClassParams);
-	}
-	return Z_Registration_Info_UClass_APOIManagerRoom.OuterSingleton;
-}
-#undef UHT_STATICS
-DEFINE_VTABLE_PTR_HELPER_CTOR_NS(, APOIManagerRoom);
-APOIManagerRoom::~APOIManagerRoom() {}
-// ********** End Class APOIManagerRoom ************************************************************
-
-// ********** Begin Class APOIManagerHouse Function SpawnTestPOIs **********************************
-#ifdef UHT_STATICS
-#error UHT_STATICS already defined
-#endif
-#define UHT_STATICS Z_Construct_UFunction_APOIManagerHouse_SpawnTestPOIs_Statics
-struct UHT_STATICS
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "CallInEditor", "true" },
-		{ "Category", "POI|Test" },
-		{ "Comment", "// Spawns TestSpawnCount source house POI actors in a building-shaped grid with\n// sequential IDs and random cube meshes -- for bake/HISM load testing only.\n" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Spawns TestSpawnCount source house POI actors in a building-shaped grid with\nsequential IDs and random cube meshes -- for bake/HISM load testing only." },
-	};
-#endif // WITH_METADATA
-
-// ********** Begin Function SpawnTestPOIs constinit property declarations *************************
-// ********** End Function SpawnTestPOIs constinit property declarations ***************************
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams UHT_STATICS::FuncParams = { { (FTypeConstructFunc*)Z_Construct_UClass_APOIManagerHouse, nullptr, "SpawnTestPOIs", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)},  };
-UFunction* Z_Construct_UFunction_APOIManagerHouse_SpawnTestPOIs(ETypeConstructPhase Phase)
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, UHT_STATICS::FuncParams);
-	}
-	return ReturnFunction;
-}
-#undef UHT_STATICS
-DEFINE_FUNCTION(APOIManagerHouse::execSpawnTestPOIs)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->SpawnTestPOIs();
-	P_NATIVE_END;
-}
-// ********** End Class APOIManagerHouse Function SpawnTestPOIs ************************************
-
-// ********** Begin Class APOIManagerHouse *********************************************************
-#ifdef UHT_STATICS
-#error UHT_STATICS already defined
-#endif
-#define UHT_STATICS Z_Construct_UClass_APOIManagerHouse_Statics
-struct UHT_STATICS
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Type_MetaData[] = {
-		{ "Comment", "// Manager for house-style POIs (a translucent cube is both display and click volume).\n// BakeScope locked to HouseOnly; RebuildHISMs merges display + click into ONE HISM\n// per mesh kind (no separate cube HISM -- half the instances).\n" },
-		{ "DisplayName", "POI Manager - House" },
-		{ "IncludePath", "POIManager.h" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Manager for house-style POIs (a translucent cube is both display and click volume).\nBakeScope locked to HouseOnly; RebuildHISMs merges display + click into ONE HISM\nper mesh kind (no separate cube HISM -- half the instances)." },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_TestCubeMeshes_MetaData[] = {
-		{ "Category", "POI|Test" },
-		{ "Comment", "// Meshes assigned randomly to spawned POIs' Cube component. Empty -> engine BasicShapes cube.\n" },
-		{ "ModuleRelativePath", "Public/POIManager.h" },
-		{ "ToolTip", "Meshes assigned randomly to spawned POIs' Cube component. Empty -> engine BasicShapes cube." },
-	};
-#endif // WITH_METADATA
-
-// ********** Begin Class APOIManagerHouse constinit property declarations *************************
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_TestCubeMeshes_Inner;
-	static const UECodeGen_Private::FArrayPropertyParams NewProp_TestCubeMeshes;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-// ********** End Class APOIManagerHouse constinit property declarations ***************************
-	static constexpr UE::CodeGen::FClassNativeFunction Funcs[] = {
-		{ .NameUTF8 = UTF8TEXT("SpawnTestPOIs"), .Pointer = &APOIManagerHouse::execSpawnTestPOIs },
-	};
-	static FTypeConstructFunc* DependentSingletons[];
-	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_APOIManagerHouse_SpawnTestPOIs, "SpawnTestPOIs" }, // ea8faae5ba98c77512d62fc0258dc19a0359bfe0
-	};
-	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
-	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
-		TCppClassTypeTraits<APOIManagerHouse>::IsAbstract,
-	};
-	static const UECodeGen_Private::FClassParams ClassParams;
-}; // struct UHT_STATICS
-
-// ********** Begin Class APOIManagerHouse Property Definitions ************************************
-const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_TestCubeMeshes_Inner = { "TestCubeMeshes", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_TestCubeMeshes = { "TestCubeMeshes", nullptr, (EPropertyFlags)0x0124080000000001, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(APOIManagerHouse, TestCubeMeshes), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TestCubeMeshes_MetaData), NewProp_TestCubeMeshes_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestCubeMeshes_Inner,
-	(const UECodeGen_Private::FPropertyParamsBase*)&UHT_STATICS::NewProp_TestCubeMeshes,
-};
-static_assert(UE_ARRAY_COUNT(UHT_STATICS::PropPointers) < 2048);
-// ********** End Class APOIManagerHouse Property Definitions **************************************
-FTypeConstructFunc* UHT_STATICS::DependentSingletons[] = {
-	(FTypeConstructFunc*)Z_Construct_UClass_APOIManager,
-	(FTypeConstructFunc*)Z_Construct_UPackage__Script_REX_Interaction,
-};
-static_assert(UE_ARRAY_COUNT(UHT_STATICS::DependentSingletons) < 16);
-const UECodeGen_Private::FClassParams UHT_STATICS::ClassParams = {
-	&Z_Construct_UClass_APOIManagerHouse,
-	"Engine",
-	&StaticCppClassTypeInfo,
-	DependentSingletons,
-	FuncInfo,
-	UHT_STATICS::PropPointers,
-	nullptr,
-	UE_ARRAY_COUNT(DependentSingletons),
-	UE_ARRAY_COUNT(FuncInfo),
-	UE_ARRAY_COUNT(UHT_STATICS::PropPointers),
-	0,
-	0x009000A4u,
-	METADATA_PARAMS(UE_ARRAY_COUNT(UHT_STATICS::Type_MetaData), UHT_STATICS::Type_MetaData)
-};
-static void APOIManagerHouse_StaticRegisterNativesAPOIManagerHouse()
-{
-	UClass* Class = APOIManagerHouse::StaticClass();
-	FNativeFunctionRegistrar::RegisterFunctions(Class, 		MakeConstArrayView(UHT_STATICS::Funcs));
-}
-FClassRegistrationInfo Z_Registration_Info_UClass_APOIManagerHouse;
-UClass* Z_Construct_UClass_APOIManagerHouse(ETypeConstructPhase Phase)
-{
-	if (Phase == ETypeConstructPhase::Inner)
-	{
-		using TClass = APOIManagerHouse;
-		if (!Z_Registration_Info_UClass_APOIManagerHouse.InnerSingleton)
-		{
-			GetPrivateStaticClassBody(
-				TClass::StaticPackage(),
-				TEXT("POIManagerHouse"),
-				Z_Registration_Info_UClass_APOIManagerHouse.InnerSingleton,
-				APOIManagerHouse_StaticRegisterNativesAPOIManagerHouse,
-				DataSizeOf<TClass>(),
-				alignof(TClass),
-				TClass::StaticClassFlags,
-				TClass::StaticClassCastFlags(),
-				TClass::StaticConfigName(),
-				(UClass::ClassConstructorType)InternalConstructor<TClass>,
-				(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
-				UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
-				&TClass::Super::StaticClass,
-				&TClass::WithinClass::StaticClass
-			);
-		}
-		return Z_Registration_Info_UClass_APOIManagerHouse.InnerSingleton;
-	}
-	if (!Z_Registration_Info_UClass_APOIManagerHouse.OuterSingleton)
-	{
-		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_APOIManagerHouse.OuterSingleton, UHT_STATICS::ClassParams);
-	}
-	return Z_Registration_Info_UClass_APOIManagerHouse.OuterSingleton;
-}
-#undef UHT_STATICS
-DEFINE_VTABLE_PTR_HELPER_CTOR_NS(, APOIManagerHouse);
-APOIManagerHouse::~APOIManagerHouse() {}
-// ********** End Class APOIManagerHouse ***********************************************************
-
 // ********** Begin Registration *******************************************************************
 #ifdef UHT_STATICS
 #error UHT_STATICS already defined
@@ -2033,26 +1700,21 @@ APOIManagerHouse::~APOIManagerHouse() {}
 #define UHT_STATICS Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_Statics
 struct UHT_STATICS
 {
-	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
-		{ Z_Construct_UEnum_REX_Interaction_EPOIBakeScope, TEXT("EPOIBakeScope"), &ZRIE_EPOIBakeScope, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 4037611011U) },
-	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ Z_Construct_UScriptStruct_FPOIBakeEntry, Z_Construct_UScriptStruct_FPOIBakeEntry_Statics::NewStructOps, TEXT("POIBakeEntry"),&Z_Registration_Info_UScriptStruct_FPOIBakeEntry, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIBakeEntry), 2664712814U) },
-		{ Z_Construct_UScriptStruct_FPlaneMaterialSet, Z_Construct_UScriptStruct_FPlaneMaterialSet_Statics::NewStructOps, TEXT("PlaneMaterialSet"),&Z_Registration_Info_UScriptStruct_FPlaneMaterialSet, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPlaneMaterialSet), 4183230698U) },
-		{ Z_Construct_UScriptStruct_FPOIHitResult, Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewStructOps, TEXT("POIHitResult"),&Z_Registration_Info_UScriptStruct_FPOIHitResult, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIHitResult), 3188951910U) },
-		{ Z_Construct_UScriptStruct_FPOIRuntimeInstance, Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewStructOps, TEXT("POIRuntimeInstance"),&Z_Registration_Info_UScriptStruct_FPOIRuntimeInstance, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIRuntimeInstance), 1993607246U) },
+		{ Z_Construct_UScriptStruct_FPOIBakeEntry, Z_Construct_UScriptStruct_FPOIBakeEntry_Statics::NewStructOps, TEXT("POIBakeEntry"),&Z_Registration_Info_UScriptStruct_FPOIBakeEntry, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIBakeEntry), 3922770351U) },
+		{ Z_Construct_UScriptStruct_FPOIMaterialSet, Z_Construct_UScriptStruct_FPOIMaterialSet_Statics::NewStructOps, TEXT("POIMaterialSet"),&Z_Registration_Info_UScriptStruct_FPOIMaterialSet, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIMaterialSet), 3553773699U) },
+		{ Z_Construct_UScriptStruct_FPOIHitResult, Z_Construct_UScriptStruct_FPOIHitResult_Statics::NewStructOps, TEXT("POIHitResult"),&Z_Registration_Info_UScriptStruct_FPOIHitResult, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIHitResult), 597737075U) },
+		{ Z_Construct_UScriptStruct_FPOIRuntimeInstance, Z_Construct_UScriptStruct_FPOIRuntimeInstance_Statics::NewStructOps, TEXT("POIRuntimeInstance"),&Z_Registration_Info_UScriptStruct_FPOIRuntimeInstance, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FPOIRuntimeInstance), 3039295763U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_APOIManager, TEXT("APOIManager"), &Z_Registration_Info_UClass_APOIManager, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManager), 1535447198U) },
-		{ Z_Construct_UClass_APOIManagerRoom, TEXT("APOIManagerRoom"), &Z_Registration_Info_UClass_APOIManagerRoom, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManagerRoom), 1145146735U) },
-		{ Z_Construct_UClass_APOIManagerHouse, TEXT("APOIManagerHouse"), &Z_Registration_Info_UClass_APOIManagerHouse, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManagerHouse), 3455355469U) },
+		{ Z_Construct_UClass_APOIManager, TEXT("APOIManager"), &Z_Registration_Info_UClass_APOIManager, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(APOIManager), 3889701764U) },
 	};
 }; // UHT_STATICS 
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_6a6ff9a3ad8a2872c6d414a52aba1d93ab696c89{
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_HostProject_Plugins_REX_Interaction_Source_REX_Interaction_Public_POIManager_h__Script_REX_Interaction_3c28c1d325291339fb6667ee0d447257bbd0d887{
 	TEXT("/Script/REX_Interaction"),
 	UHT_STATICS::ClassInfo, UE_ARRAY_COUNT(UHT_STATICS::ClassInfo),
 	UHT_STATICS::ScriptStructInfo, UE_ARRAY_COUNT(UHT_STATICS::ScriptStructInfo),
-	UHT_STATICS::EnumInfo, UE_ARRAY_COUNT(UHT_STATICS::EnumInfo),
+	nullptr, 0,
 	nullptr, 0,
 };
 #undef UHT_STATICS

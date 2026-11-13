@@ -18,13 +18,13 @@ static_assert(!UE_WITH_CONSTINIT_UOBJECT, "This generated code can only be compi
 			nullptr,
 			0,
 			PKG_CompiledIn | 0x00000000,
-			0x3EDF3969,
-			0x1353D3CA,
+			0x8494E411,
+			0x947B104C,
 			METADATA_PARAMS(0, nullptr)
 		};
 		UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_REX_Interaction.OuterSingleton, PackageParams);
 	}
 	return Z_Registration_Info_UPackage__Script_REX_Interaction.OuterSingleton;
 }
-static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_REX_Interaction(Z_Construct_UPackage__Script_REX_Interaction, TEXT("/Script/REX_Interaction"), Z_Registration_Info_UPackage__Script_REX_Interaction, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x3EDF3969, 0x1353D3CA));
+static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_REX_Interaction(Z_Construct_UPackage__Script_REX_Interaction, TEXT("/Script/REX_Interaction"), Z_Registration_Info_UPackage__Script_REX_Interaction, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x8494E411, 0x947B104C));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

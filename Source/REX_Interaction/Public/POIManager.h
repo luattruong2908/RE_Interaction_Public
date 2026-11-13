@@ -9,19 +9,10 @@ class UStaticMesh;
 class UMaterialInterface;
 class UPrimitiveComponent;
 
-// Which POI kind a manager bakes/deletes. Lets two managers coexist in one level
-// (one PlaneOnly for rooms, one HouseOnly for houses) without touching each other's actors.
-UENUM()
-enum class EPOIBakeScope : uint8
-{
-    PlaneAndHouse UMETA(DisplayName = "Plane + House"),
-    PlaneOnly UMETA(DisplayName = "Plane Only"),
-    HouseOnly UMETA(DisplayName = "House Only"),
-};
-
 // One baked POI. BakedEntries is the serialized source of truth; the HISMs are
 // Transient and rebuilt from it on every load (see RebuildHISMs).
-// Do NOT rename fields -- that breaks data already baked into maps.
+// Do NOT rename fields without a property redirect in
+// Config/DefaultREX_Interaction.ini -- that breaks data already baked into maps.
 USTRUCT()
 struct FPOIBakeEntry
 {
@@ -31,18 +22,14 @@ struct FPOIBakeEntry
     UPROPERTY(VisibleAnywhere, Category = "POI")
     FString POI_ID;
 
-    // Display mesh: the Plane of BP_POI_Room, or the Cube itself for BP_POI_House.
-    // Also the grouping key -- one display HISM per distinct mesh.
+    // The source POI's Cube mesh: display and click volume in one.
+    // Also the grouping key -- one HISM per distinct mesh.
     UPROPERTY(VisibleAnywhere, Category = "POI")
-    TObjectPtr<UStaticMesh> PlaneMesh = nullptr;
+    TObjectPtr<UStaticMesh> Mesh = nullptr;
 
-    // World transform of the display mesh.
+    // World transform of the Cube.
     UPROPERTY(VisibleAnywhere, Category = "POI")
-    FTransform PlaneTransform = FTransform::Identity;
-
-    // World transform of the click volume.
-    UPROPERTY(VisibleAnywhere, Category = "POI")
-    FTransform CubeTransform = FTransform::Identity;
+    FTransform Transform = FTransform::Identity;
 
     // Camera spring arm settings captured from the source POI at bake time.
     // The pawn reads these when the player clicks a POI and applies them to its own spring arm.
@@ -56,10 +43,10 @@ struct FPOIBakeEntry
     float CameraArmLength = 800.f;
 };
 
-// Per-slot materials of one plane mesh kind, captured at bake time. Only true
+// Per-slot materials of one mesh kind, captured at bake time. Only true
 // overrides are stored; null = inherit the mesh's own material.
 USTRUCT()
-struct FPlaneMaterialSet
+struct FPOIMaterialSet
 {
     GENERATED_BODY()
 
@@ -80,12 +67,12 @@ struct FPOIHitResult
     UPROPERTY(BlueprintReadOnly, Category = "POI")
     float CameraArmLength = 800.f;
 
-    // World location of the hit POI's display marker (zero on a missed trace).
+    // World location of the hit POI (zero on a missed trace).
     UPROPERTY(BlueprintReadOnly, Category = "POI")
     FVector POILocation = FVector::ZeroVector;
 };
 
-// Runtime data of one POI, indexed by cube instance index.
+// Runtime data of one POI, same order as BakedEntries.
 // Transient -- rebuilt from BakedEntries on load.
 USTRUCT()
 struct FPOIRuntimeInstance
@@ -95,19 +82,19 @@ struct FPOIRuntimeInstance
     UPROPERTY()
     FString POI_ID;
 
-    // Index into PlaneHISMs (INDEX_NONE if this POI has no display mesh).
+    // Index into APOIManager::HISMs (INDEX_NONE if this POI has no mesh).
     UPROPERTY()
-    int32 PlaneHISMIndex = INDEX_NONE;
+    int32 HISMIndex = INDEX_NONE;
 
-    // Instance index inside that plane HISM.
+    // Instance index inside that HISM.
     UPROPERTY()
-    int32 PlaneInstanceIndex = INDEX_NONE;
+    int32 InstanceIndex = INDEX_NONE;
 
     // Cached show/hide state, used to skip hidden POIs on click.
     UPROPERTY()
     bool bVisible = true;
 
-    // Display marker world location (copied from the baked transform at rebuild time).
+    // World location (copied from the baked transform at rebuild time).
     UPROPERTY()
     FVector Location = FVector::ZeroVector;
 
@@ -122,12 +109,11 @@ struct FPOIRuntimeInstance
     float CameraArmLength = 800.f;
 };
 
-// Base POI manager (Abstract -- place the subclasses below instead).
-// Bakes hundreds/thousands of source POI actors into a few HISMs: one shared
-// invisible cube HISM for clicks + one display HISM per distinct mesh. All visual
-// state (show/hide, color, selection) is per-instance custom data read by the
-// material on the GPU -- no per-frame CPU work, no per-instance SetVisibility.
-UCLASS(Abstract)
+// Bakes hundreds/thousands of source POI actors (BP_POI_House: one translucent
+// Cube that is both display and click volume) into one HISM per distinct mesh.
+// All visual state (show/hide, color, selection) is per-instance custom data read
+// by the material on the GPU -- no per-frame CPU work, no per-instance SetVisibility.
+UCLASS(meta = (DisplayName = "POI Manager"))
 class REX_INTERACTION_API APOIManager : public AActor
 {
     GENERATED_BODY()
@@ -135,17 +121,25 @@ class REX_INTERACTION_API APOIManager : public AActor
 public:
     APOIManager();
 
+#if WITH_EDITOR
     // ---- Editor buttons ----
 
-    // Scans the level for source POI actors (per BakeScope), fills BakedEntries,
-    // rebuilds the HISMs. Idempotent -- re-running re-bakes from scratch.
+    // Scans the level for source POI actors, fills BakedEntries, rebuilds the
+    // HISMs. Re-running re-bakes from scratch. A scan that finds no source POI keeps
+    // the existing bake (the sources are usually deleted after baking).
     UFUNCTION(CallInEditor, Category = "POI")
     void BakeFromLevel();
 
-    // Destroys the source POI actors in this manager's scope. Run AFTER baking.
+    // Destroys the source POI actors. Run AFTER baking.
     // Not undoable -- if pressed by mistake, do not save the map.
     UFUNCTION(CallInEditor, Category = "POI")
     void DeleteSourcePOIs();
+
+    // Spawns TestSpawnCount source POI actors in a building-shaped grid with
+    // sequential IDs and random cube meshes -- for bake/HISM load testing only.
+    UFUNCTION(CallInEditor, Category = "POI|Test")
+    void SpawnTestPOIs();
+#endif
 
     // ---- Runtime API ----
 
@@ -185,8 +179,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "POI")
     int32 SetSelectedPOI(const FString& POI_ID);
 
-    // Multi line trace Start->End that skips hidden POIs (cubes Overlap, so the ray
-    // passes through them) and returns the POI_ID of the nearest VISIBLE one.
+    // Multi line trace Start->End that skips hidden POIs (instances Overlap, so the
+    // ray passes through them) and returns the POI_ID of the nearest VISIBLE one.
     UFUNCTION(BlueprintCallable, Category = "POI")
     bool TraceForPOI(const FVector& Start, const FVector& End, FString& OutPOI_ID) const;
 
@@ -227,26 +221,11 @@ protected:
     UPROPERTY(VisibleAnywhere, Category = "POI|Debug")
     TArray<FPOIBakeEntry> BakedEntries;
 
-    // Mesh for the shared click-cube HISM (taken from the first baked POI when unset).
-    UPROPERTY(EditAnywhere, Category = "POI")
-    TObjectPtr<UStaticMesh> CubeMesh;
-
-    // Materials captured from the source display components at bake time, per mesh kind.
+    // Materials captured from the source Cube components at bake time, per mesh kind.
     UPROPERTY()
-    TMap<TObjectPtr<UStaticMesh>, FPlaneMaterialSet> PlaneMaterialsByMesh;
+    TMap<TObjectPtr<UStaticMesh>, FPOIMaterialSet> MaterialsByMesh;
 
-    UPROPERTY(EditAnywhere, Category = "POI")
-    EPOIBakeScope BakeScope = EPOIBakeScope::PlaneAndHouse;
-
-    // Source actor classes. Soft refs: editor dropdown + they follow redirectors if
-    // the asset is moved/renamed.
-    UPROPERTY(EditAnywhere, Category = "POI")
-    TSoftClassPtr<AActor> POIClassRef = TSoftClassPtr<AActor>(FSoftObjectPath(TEXT("/REX_Interaction/Cores/POI/BP_POI_Room.BP_POI_Room_C")));
-
-    UPROPERTY(EditAnywhere, Category = "POI")
-    TSoftClassPtr<AActor> POIHouseClassRef = TSoftClassPtr<AActor>(FSoftObjectPath(TEXT("/REX_Interaction/Cores/POI/BP_POI_House.BP_POI_House_C")));
-
-    // Trace channel for POI clicks. Cubes respond Overlap (NOT Block) so a multi
+    // Trace channel for POI clicks. Instances respond Overlap (NOT Block) so a multi
     // trace passes through hidden POIs to visible ones behind them. Default is the
     // dedicated "POITrace" channel (ECC_GameTraceChannel1, declared in
     // DefaultEngine.ini with DefaultResponse=Ignore so walls/floors never block the
@@ -266,53 +245,55 @@ protected:
     //   4      Selected (1/0) -> brighter emissive
     //   5      SelectTime (world seconds at selection; material runs a decaying
     //          envelope on Time - slot5 for a one-shot pulse)
-    UPROPERTY(EditAnywhere, Category = "POI")
+    // Minimum 4: slots 0..3 are always written.
+    UPROPERTY(EditAnywhere, Category = "POI", meta = (ClampMin = "4", ClampMax = "32"))
     int32 NumCustomDataFloats = 6;
 
-    UPROPERTY(EditAnywhere, Category = "POI")
+    UPROPERTY(EditAnywhere, Category = "POI", meta = (ClampMin = "0", ClampMax = "31"))
     int32 SelectedDataIndex = 4;
 
-    UPROPERTY(EditAnywhere, Category = "POI")
+    // -1 = no timestamp slot (selection still works, the pulse does not).
+    UPROPERTY(EditAnywhere, Category = "POI", meta = (ClampMin = "-1", ClampMax = "31"))
     int32 SelectTimeDataIndex = 5;
 
-    // ---- Test spawning (shared by the Room/House "Spawn Test POIs" buttons; test-only) ----
+#if WITH_EDITORONLY_DATA
+    // Source actor class for the editor buttons. Soft ref: editor dropdown + it
+    // follows redirectors if the asset is moved/renamed.
+    UPROPERTY(EditAnywhere, Category = "POI")
+    TSoftClassPtr<AActor> POIClassRef = TSoftClassPtr<AActor>(FSoftObjectPath(TEXT("/REX_Interaction/Cores/POI/BP_POI_House.BP_POI_House_C")));
 
-    UPROPERTY(EditAnywhere, Category = "POI|Test")
+    // ---- Test spawning (the "Spawn Test POIs" button; test-only) ----
+
+    UPROPERTY(EditAnywhere, Category = "POI|Test", meta = (ClampMin = "1", ClampMax = "20000"))
     int32 TestSpawnCount = 1000;
 
     // POIs per row (X axis).
-    UPROPERTY(EditAnywhere, Category = "POI|Test")
+    UPROPERTY(EditAnywhere, Category = "POI|Test", meta = (ClampMin = "1"))
     int32 TestGridColumns = 20;
 
     // Rows per floor (Y axis).
-    UPROPERTY(EditAnywhere, Category = "POI|Test")
+    UPROPERTY(EditAnywhere, Category = "POI|Test", meta = (ClampMin = "1"))
     int32 TestGridRows = 5;
 
     // Spacing in cm: X = column, Y = row, Z = floor height.
     UPROPERTY(EditAnywhere, Category = "POI|Test")
     FVector TestGridSpacing = FVector(200.f, 200.f, 300.f);
 
-    // Shared spawner for the subclass test buttons: spawns TestSpawnCount actors of
-    // SourceClassRef in the building grid, assigns sequential POI_1..POI_N, and a random
-    // mesh from MeshPool (falling back to DefaultMeshPaths) onto the component named
-    // MeshComponentName. Clears the BP's material overrides so the swapped mesh shows its
-    // own material instead of a BasicShapeMaterial override.
-    void SpawnTestPOIsInternal(const TSoftClassPtr<AActor>& SourceClassRef, const TCHAR* MeshComponentName,
-        const TArray<TObjectPtr<UStaticMesh>>& MeshPool, const TArray<const TCHAR*>& DefaultMeshPaths);
+    // Meshes assigned randomly to spawned POIs' Cube component. Empty -> engine BasicShapes cube.
+    UPROPERTY(EditAnywhere, Category = "POI|Test")
+    TArray<TObjectPtr<UStaticMesh>> TestCubeMeshes;
+#endif
 
     // ---- Transient: rebuilt from BakedEntries on every load ----
 
+    // Parallel arrays: HISMs[i] renders instances of MeshKeys[i].
     UPROPERTY(Transient)
-    TObjectPtr<UCustomHISMC> CubeHISM;
-
-    // Parallel arrays: PlaneHISMs[i] renders instances of PlaneMeshKeys[i].
-    UPROPERTY(Transient)
-    TArray<TObjectPtr<UCustomHISMC>> PlaneHISMs;
+    TArray<TObjectPtr<UCustomHISMC>> HISMs;
 
     UPROPERTY(Transient)
-    TArray<TObjectPtr<UStaticMesh>> PlaneMeshKeys;
+    TArray<TObjectPtr<UStaticMesh>> MeshKeys;
 
-    // One entry per cube instance, same order as CubeHISM's instances.
+    // One entry per baked POI, same order as BakedEntries.
     UPROPERTY(Transient)
     TArray<FPOIRuntimeInstance> POIInstances;
 
@@ -322,18 +303,33 @@ protected:
     FString SelectedPOI_ID;
 
 private:
-    // Destroys all attached HISMs and rebuilds everything from BakedEntries (idempotent).
+    // Lookup tables, filled by RebuildHISMs. Not reflected, so they never survive a
+    // world duplication (PIE) -- bLookupsBuilt then reads false and BeginPlay rebuilds.
+
+    // Click lookup: InstanceToPOI[HISM index][instance index] = index into POIInstances.
+    TArray<TArray<int32>> InstanceToPOI;
+
+    // POI_ID -> indices into POIInstances (an ID may be shared by several POIs).
+    TMap<FString, TArray<int32>> IdToPOIs;
+
+    bool bLookupsBuilt = false;
+
+    // Destroys the HISMs this manager created and rebuilds everything from
+    // BakedEntries (idempotent).
     void RebuildHISMs();
 
-    // Creates and registers one Transient HISM.
-    //   bClickCollision: QueryOnly + Overlap on POITraceChannel (click volume).
-    //   bVisibleDisplay: rendered or not.
-    // Room cube: (true, false). Room plane: (false, true). Unified house: (true, true).
-    UCustomHISMC* CreateHISM(UStaticMesh* Mesh, bool bClickCollision, bool bVisibleDisplay);
+    // Creates and registers one Transient HISM: rendered, QueryOnly + Overlap on
+    // POITraceChannel (display and click volume in one).
+    UCustomHISMC* CreateHISM(UStaticMesh* Mesh);
 
-    // Returns the PlaneHISMs index of the HISM for this mesh, creating it if needed.
-    // bWithClickCollision = true in unified house mode (display HISM doubles as click volume).
-    int32 GetOrCreatePlaneHISM(UStaticMesh* Mesh, bool bWithClickCollision);
+    // Returns the HISMs index of the HISM for this mesh, creating it if needed.
+    int32 GetOrCreateHISM(UStaticMesh* Mesh);
+
+    // The live HISM holding this POI's instance, or null (no mesh / HISM destroyed).
+    UCustomHISMC* GetInstanceHISM(const FPOIRuntimeInstance& Inst) const;
+
+    // MarkRenderStateDirty on every live HISM -- call once after a batch of writes.
+    void MarkAllHISMsDirty();
 
     // Maps a hit (component + instance index) to an index in POIInstances, or INDEX_NONE.
     int32 ResolvePOIIndex(const UPrimitiveComponent* Comp, int32 InstanceIndex) const;
@@ -342,48 +338,6 @@ private:
     void ApplyVisibility(TFunctionRef<bool(const FString&)> ShouldShow);
 
     // Writes RGB into slots 1..3 of one instance and collects the touched HISM so the
-    // caller can dirty it once. False if the instance has no display mesh.
+    // caller can dirty it once. False if the instance has no live HISM.
     bool WriteInstanceColor(const FPOIRuntimeInstance& Inst, const FLinearColor& Color, TSet<UCustomHISMC*>& DirtyHISMs);
-};
-
-// Manager for plane-style POIs (rooms). BakeScope locked to PlaneOnly in the constructor.
-UCLASS(meta = (DisplayName = "POI Manager - Room"))
-class REX_INTERACTION_API APOIManagerRoom : public APOIManager
-{
-    GENERATED_BODY()
-
-public:
-    APOIManagerRoom();
-
-    // Spawns TestSpawnCount source POI actors in a building-shaped grid with sequential
-    // IDs and random plane meshes -- for bake/HISM load testing only.
-    UFUNCTION(CallInEditor, Category = "POI|Test")
-    void SpawnTestPOIs();
-
-protected:
-    // Meshes assigned randomly to spawned POIs' Plane component. Empty -> engine BasicShapes planes.
-    UPROPERTY(EditAnywhere, Category = "POI|Test")
-    TArray<TObjectPtr<UStaticMesh>> TestPlaneMeshes;
-};
-
-// Manager for house-style POIs (a translucent cube is both display and click volume).
-// BakeScope locked to HouseOnly; RebuildHISMs merges display + click into ONE HISM
-// per mesh kind (no separate cube HISM -- half the instances).
-UCLASS(meta = (DisplayName = "POI Manager - House"))
-class REX_INTERACTION_API APOIManagerHouse : public APOIManager
-{
-    GENERATED_BODY()
-
-public:
-    APOIManagerHouse();
-
-    // Spawns TestSpawnCount source house POI actors in a building-shaped grid with
-    // sequential IDs and random cube meshes -- for bake/HISM load testing only.
-    UFUNCTION(CallInEditor, Category = "POI|Test")
-    void SpawnTestPOIs();
-
-protected:
-    // Meshes assigned randomly to spawned POIs' Cube component. Empty -> engine BasicShapes cube.
-    UPROPERTY(EditAnywhere, Category = "POI|Test")
-    TArray<TObjectPtr<UStaticMesh>> TestCubeMeshes;
 };
